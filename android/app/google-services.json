@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "394960312092",
+    "project_id": "aksesin-db",
+    "storage_bucket": "aksesin-db.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394960312092:android:dcad219bfec917c9710cd9",
+        "android_client_info": {
+          "package_name": "com.example.aksesin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-qupYuMC_vcojLZQtrdOCLNRfWGf1DDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
