@@ -1,20 +1,41 @@
+import 'package:aksesin/presentation/view/onboarding1.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:aksesin/presentation/view/auth_view/login_screen.dart';
 import 'package:aksesin/presentation/view/auth_view/register_screen.dart';
 import 'package:aksesin/presentation/view/home_page/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart'; 
 
 final GoRouter router = GoRouter(
   routes: [
+    // GoRoute(path: '/',
+    // builder: (context, state) => const SplashScreen(), 
+    // ),
     GoRoute(
       path: '/',
       builder: (context, state) {
-        final user = FirebaseAuth.instance.currentUser;
-        if (user != null) {
-          return const HomeScreen();
-        } else {
-          return LoginScreen();
-        }
+        return FutureBuilder(
+          future: SharedPreferences.getInstance(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else {
+              final prefs = snapshot.data as SharedPreferences;
+              final bool? onboardingCompleted = prefs.getBool('onboardingCompleted');
+              final user = FirebaseAuth.instance.currentUser;
+              if (onboardingCompleted == true) {
+                if (user != null) {
+                  return const HomeScreen();
+                } else {
+                  return const LoginScreen();
+                }
+              } else {
+                return const Onboarding1();
+              }
+            }
+          },
+        );
       },
     ),
     GoRoute(
@@ -28,6 +49,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/home',
       builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/onboarding',
+      builder: (context, state) => const Onboarding1(),
     ),
   ],
 );
