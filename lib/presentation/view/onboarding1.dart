@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:aksesin/main.dart'; // Import MyHomePage
+import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Onboarding1 extends StatefulWidget {
   const Onboarding1({super.key});
@@ -579,15 +580,10 @@ class _Onboarding1State extends State<Onboarding1> {
                                     right: 0, // Customize right position
                                     bottom: 90, // Customize bottom position
                                     child: CustomButton(
-                                      onPressed: () {
-                                        // Navigate to MyHomePage after onboarding
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const MyHomePage(
-                                                      title: 'Home')),
-                                        );
+                                      onPressed: () async {
+                                        final prefs = await SharedPreferences.getInstance();
+                                        await prefs.setBool('onboardingCompleted', true);
+                                        context.go('/login');
                                       },
                                       height: 60, // Customize height
                                       width: 365, // Customize width
@@ -635,7 +631,7 @@ class CustomButton extends StatelessWidget {
   final TextStyle textStyle;
   final Widget child;
 
-  const CustomButton({
+  const CustomButton({super.key, 
     required this.onPressed,
     required this.height,
     required this.width,

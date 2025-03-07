@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'di/injection_container.dart' as di;
 import 'package:aksesin/data/datasource/auth_service.dart';
+import 'package:aksesin/presentation/provider/onboarding_provider.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,8 +15,14 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   di.setupDependencyInjection();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   runApp(const MyApp());
+
+   Future.delayed(const Duration(seconds: 2), () {
+    FlutterNativeSplash.remove(); 
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -33,6 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         Provider<FirebaseAuthService>(
           create: (_) => di.sl<FirebaseAuthService>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => OnboardingProvider(),
         ),
       ],
       child: MaterialApp.router(
