@@ -98,11 +98,11 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 flutter_native_splash:
-  color: "#ffffff"  
+  color: "#FFFAFA"  
   image: assets/images/splash_aksesin.png 
   android_12:
     image: assets/images/splash_aksesin.png
-    color: "#ffffff"
+    color: "#FFFAFA"
   fullscreen: false  
   android: true  
   ios: true  
