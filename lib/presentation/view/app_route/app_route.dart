@@ -9,9 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final GoRouter router = GoRouter(
   routes: [
-    // GoRoute(path: '/',
-    // builder: (context, state) => const SplashScreen(), 
-    // ),
     GoRoute(
       path: '/',
       builder: (context, state) {

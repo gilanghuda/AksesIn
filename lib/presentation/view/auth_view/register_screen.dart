@@ -91,7 +91,7 @@ class _RegisterpPageState extends State<RegisterScreen> {
                           if (!emailRegex.hasMatch(value)) {
                             return 'Format email tidak valid';
                           }
-                          return 'Email sudah terdaftar';
+                          return null;
                         },
                       ),
                       const SizedBox(height: 8),
