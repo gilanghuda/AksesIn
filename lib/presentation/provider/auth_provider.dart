@@ -92,7 +92,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   void _setError(String message) {
-    _errorMessage = message;
+    _errorMessage = message.replaceAll('Exception: ', '');
     notifyListeners();
   }
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
 import 'package:aksesin/presentation/widget/button.dart';
 import 'package:aksesin/presentation/widget/styles.dart';
-import 'package:fluttertoast/fluttertoast.dart'; 
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,14 +20,14 @@ class _LoginPageState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   void _showErrorToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-    );
-  }
+     Fluttertoast.showToast(
+       msg: message,
+       toastLength: Toast.LENGTH_SHORT,
+       gravity: ToastGravity.BOTTOM,
+       backgroundColor: Colors.red,
+       textColor: Colors.white,
+     );
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -151,14 +151,19 @@ class _LoginPageState extends State<LoginScreen> {
                             ? Center(child: CircularProgressIndicator())
                             : Column(
                                 children: [
-                                  Builder(
-                                    builder: (context) {
-                                      if (authProvider.errorMessage != null) {
-                                        _showErrorToast(authProvider.errorMessage!);
-                                      }
-                                      return SizedBox.shrink();
-                                    },
-                                  ),
+                                  if (authProvider.errorMessage != null)
+                                    Text(
+                                      authProvider.errorMessage!,
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                    Builder(
+                                     builder: (context) {
+                                       if (authProvider.errorMessage != null) {
+                                         _showErrorToast(authProvider.errorMessage!);
+                                       }
+                                       return SizedBox.shrink();
+                                     },
+                                   ),
                                   CustomButton(
                                     text: 'Masuk',
                                     onPressed: () {
@@ -216,10 +221,10 @@ class _LoginPageState extends State<LoginScreen> {
                 const SizedBox(height: 16),
                 OutlinedButton.icon(
                   onPressed: authProvider.isLoading
-                      ? null
-                      : () {
-                          authProvider.signInWithGoogle(context);
-                        },
+                       ? null
+                       : () {
+                           authProvider.signInWithGoogle(context);
+                         },
                   icon: Image.asset(
                     'assets/images/logo_google.png', 
                     height: 24,
