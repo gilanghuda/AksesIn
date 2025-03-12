@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
 import 'package:aksesin/presentation/widget/button.dart';
 import 'package:aksesin/presentation/widget/styles.dart';
+import 'package:fluttertoast/fluttertoast.dart'; 
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -19,6 +20,16 @@ class _RegisterpPageState extends State<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  void _showErrorToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -204,6 +215,14 @@ class _RegisterpPageState extends State<RegisterScreen> {
                                 }
                               },
                             ),
+                      Builder(
+                        builder: (context) {
+                          if (authProvider.errorMessage != null) {
+                            _showErrorToast(authProvider.errorMessage!);
+                          }
+                          return SizedBox.shrink();
+                        },
+                      ),
                       const SizedBox(height: 4),
                     ],
                   ),
