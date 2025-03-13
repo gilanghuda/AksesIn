@@ -3,6 +3,7 @@ import 'package:aksesin/domain/usecases/register_user.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:aksesin/data/datasource/auth_service.dart';
+import 'package:aksesin/data/models/user_model.dart';
 
 class AuthProvider with ChangeNotifier {
   final LoginUser loginUser;
@@ -41,11 +42,11 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> register(String email, String username, String password, BuildContext context) async {
+  Future<void> register(String email, String username, String password, BuildContext context, List<String> disabilityOptions) async {
     _setLoading(true);
     _clearError();
     try {
-      await authService.register(email, username, password);
+      await authService.register(email, username, password, disabilityOptions);
       if (context.mounted) {
         context.go('/login');
       }
@@ -84,6 +85,10 @@ class AuthProvider with ChangeNotifier {
     } finally {
       _setLoading(false);
     }
+  }
+
+  Future<UserModel> getCurrentUserProfile() async {
+    return await authService.getCurrentUserProfile();
   }
 
   void _setLoading(bool value) {

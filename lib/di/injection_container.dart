@@ -5,6 +5,7 @@ import 'package:aksesin/domain/usecases/login_user.dart';
 import 'package:aksesin/domain/usecases/register_user.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
 import 'package:get_it/get_it.dart';
+import 'package:aksesin/data/models/user_model.dart'; 
 
 final sl = GetIt.instance;
 
@@ -26,4 +27,12 @@ void setupDependencyInjection() {
     registerUser: sl(),
     authService: FirebaseAuthService()
    ));
+
+  // Add this block
+  sl.registerLazySingleton<UserModel>(() => UserModel(
+    id: '',
+    username: '',
+    email: '',
+    disabilityOptions: [],
+  ));
 }

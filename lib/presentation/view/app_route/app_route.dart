@@ -1,3 +1,4 @@
+import 'package:aksesin/presentation/view/auth_view/dissability_screen.dart';
 import 'package:aksesin/presentation/view/onboarding1.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -40,8 +41,22 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
+      path: '/dissability',
+      builder: (context, state) => const DissabilityScreen(option: ''),
+    ),
+    GoRoute(
+      path: '/dissability/:option',
+      builder: (context, state) {
+        final option = state.pathParameters['option'] ?? '';
+        return DissabilityScreen(option: option);
+      },
+    ),
+    GoRoute(
       path: '/register',
-      builder: (context, state) => const RegisterScreen(),
+      builder: (context, state) {
+        final options = state.extra as List<String>?;
+        return RegisterScreen(options: options);
+      },
     ),
     GoRoute(
       path: '/home',

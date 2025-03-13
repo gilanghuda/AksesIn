@@ -190,7 +190,7 @@ class _LoginPageState extends State<LoginScreen> {
                           Text('Belum punya akun?'),
                           TextButton(
                             onPressed: () {
-                              context.go('/register');
+                              context.go('/dissability');
                             },
                             child: Text( 
                               'Sign Up', 

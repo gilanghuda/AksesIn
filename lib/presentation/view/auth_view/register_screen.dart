@@ -7,7 +7,9 @@ import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:fluttertoast/fluttertoast.dart'; 
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  final String? option;
+  final List<String>? options;
+  const RegisterScreen({super.key, this.option, this.options});
 
   @override
   _RegisterpPageState createState() => _RegisterpPageState();
@@ -20,6 +22,7 @@ class _RegisterpPageState extends State<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  List<String> _selectedDisabilityOptions = [];
 
   void _showErrorToast(String message) {
     Fluttertoast.showToast(
@@ -34,6 +37,7 @@ class _RegisterpPageState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
+    _selectedDisabilityOptions = widget.options ?? [];
 
     return Scaffold(
       body: SafeArea(
@@ -200,6 +204,7 @@ class _RegisterpPageState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       authProvider.isLoading
                           ? Center(child: CircularProgressIndicator())
                           : CustomButton(
@@ -211,6 +216,7 @@ class _RegisterpPageState extends State<RegisterScreen> {
                                     _usernameController.text,
                                     _passwordController.text,
                                     context,
+                                    _selectedDisabilityOptions,
                                   );
                                 }
                               },

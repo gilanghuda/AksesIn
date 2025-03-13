@@ -2,6 +2,7 @@ import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
+import 'package:aksesin/presentation/view/akses_jalan_detail/akses_jalan_detail.dart';
 
 class AksesJalanScreen extends StatefulWidget {
   const AksesJalanScreen({super.key});
@@ -65,6 +66,14 @@ class _AksesJalanScreenState extends State<AksesJalanScreen> {
                                 hintText: 'Cari Lokasi',
                                 border: InputBorder.none,
                               ),
+                              onSubmitted: (query) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AksesJalanDetailScreen(location: query),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                           IconButton(
