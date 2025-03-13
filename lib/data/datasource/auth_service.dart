@@ -1,7 +1,9 @@
 import 'package:aksesin/data/models/user_model.dart';
+import 'package:aksesin/presentation/view/auth_view/disability_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; 
+import 'package:flutter/material.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -73,7 +75,7 @@ class FirebaseAuthService {
     }
   }
 
-  Future<UserModel> signInWithGoogle() async {
+  Future<UserModel> signInWithGoogle(BuildContext context) async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
@@ -89,18 +91,33 @@ class FirebaseAuthService {
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
       final firebaseUser = userCredential.user;
 
-    
       DocumentSnapshot userDoc = await _firestore.collection('users').doc(firebaseUser!.uid).get();
-      String username = userDoc['username'];
-      List<String> disabilityOptions = List<String>.from(userDoc['disabilityOptions']);
-      String? photoUrl = userDoc['photoUrl']; 
+      List<String> disabilityOptions = [];
+      if (!userDoc.exists) {
+
+        disabilityOptions = await showDialog<List<String>>(
+          context: context,
+          builder: (BuildContext context) {
+            return DisabilityDialog();
+          },
+        ) ?? [];
+
+        await _firestore.collection('users').doc(firebaseUser.uid).set({
+          'username': firebaseUser.displayName,
+          'email': firebaseUser.email,
+          'disabilityOptions': disabilityOptions,
+          'photoUrl': firebaseUser.photoURL,
+        });
+      } else {
+        disabilityOptions = List<String>.from(userDoc['disabilityOptions']);
+      }
 
       return UserModel(
         id: firebaseUser.uid,
-        username: username,
+        username: firebaseUser.displayName!,
         email: firebaseUser.email!,
         disabilityOptions: disabilityOptions,
-        photoUrl: photoUrl, 
+        photoUrl: firebaseUser.photoURL,
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'sign_in_failed') {

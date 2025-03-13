@@ -61,7 +61,7 @@ class AuthProvider with ChangeNotifier {
     _setLoading(true);
     _clearError();
     try {
-      await authService.signInWithGoogle();
+      await authService.signInWithGoogle(context);
       if (context.mounted) {
         context.go('/home');
       }
