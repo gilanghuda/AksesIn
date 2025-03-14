@@ -1,60 +1,27 @@
 import 'package:flutter/material.dart';
+import 'input_loc_section.dart';
 
 class AksesJalanDetailScreen extends StatelessWidget {
   final String location;
 
-  const AksesJalanDetailScreen({Key? key, required this.location}) : super(key: key);
+  const AksesJalanDetailScreen({super.key, required this.location});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(location),
-      ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Cari Lokasi',
-                    prefixIcon: Icon(Icons.search),
-                    suffixIcon: Icon(Icons.mic),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        Icon(Icons.home, color: Colors.blue),
-                        Text('Rumah'),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Icon(Icons.business, color: Colors.blue),
-                        Text('Kantor'),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Icon(Icons.more_horiz, color: Colors.blue),
-                        Text('Lainnya'),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16.0),
+                bottomRight: Radius.circular(16.0),
+              ),
             ),
+            padding: const EdgeInsets.all(16.0),
+            child: InputLocSection(),
           ),
-          Divider(),
           Expanded(
             child: ListView(
               padding: EdgeInsets.all(16),
