@@ -1,4 +1,8 @@
 import 'package:aksesin/presentation/provider/auth_provider.dart';
+import 'package:aksesin/presentation/view/OTP.dart';
+import 'package:aksesin/presentation/view/Profile.dart';
+import 'package:aksesin/presentation/view/Profile1.dart';
+import 'package:aksesin/presentation/view/Resetpass.dart';
 import 'package:aksesin/presentation/view/app_route/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,6 +12,7 @@ import 'di/injection_container.dart' as di;
 import 'package:aksesin/data/datasource/auth_service.dart';
 import 'package:aksesin/presentation/provider/onboarding_provider.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'presentation/view/auth1.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +25,8 @@ void main() async {
 
   runApp(const MyApp());
 
-   Future.delayed(const Duration(seconds: 2), () {
-    FlutterNativeSplash.remove(); 
+  Future.delayed(const Duration(seconds: 2), () {
+    FlutterNativeSplash.remove();
   });
 }
 
@@ -34,10 +39,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => AuthProvider(
-            loginUser: di.sl(),
-            registerUser: di.sl(),
-            authService: FirebaseAuthService()
-          ),
+              loginUser: di.sl(),
+              registerUser: di.sl(),
+              authService: FirebaseAuthService()),
         ),
         Provider<FirebaseAuthService>(
           create: (_) => di.sl<FirebaseAuthService>(),
@@ -46,11 +50,11 @@ class MyApp extends StatelessWidget {
           create: (_) => OnboardingProvider(),
         ),
       ],
-      child: MaterialApp.router(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'aksesin',
         theme: ThemeData(primarySwatch: Colors.blue),
-        routerConfig: router,
+        home: const Profile1(), // Set forgotpass as the initial screen
       ),
     );
   }

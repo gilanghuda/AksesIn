@@ -5,12 +5,13 @@ import 'package:aksesin/presentation/view/auth_view/login_screen.dart';
 import 'package:aksesin/presentation/view/auth_view/register_screen.dart';
 import 'package:aksesin/presentation/view/home_page/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart'; 
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:aksesin/presentation/view/auth1.dart'; // Import the auth1.dart file
 
 final GoRouter router = GoRouter(
   routes: [
     // GoRoute(path: '/',
-    // builder: (context, state) => const SplashScreen(), 
+    // builder: (context, state) => const SplashScreen(),
     // ),
     GoRoute(
       path: '/',
@@ -22,7 +23,8 @@ final GoRouter router = GoRouter(
               return CircularProgressIndicator();
             } else {
               final prefs = snapshot.data as SharedPreferences;
-              final bool? onboardingCompleted = prefs.getBool('onboardingCompleted');
+              final bool? onboardingCompleted =
+                  prefs.getBool('onboardingCompleted');
               final user = FirebaseAuth.instance.currentUser;
               if (onboardingCompleted == true) {
                 if (user != null) {
@@ -53,6 +55,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/onboarding',
       builder: (context, state) => const Onboarding1(),
+    ),
+    GoRoute(
+      path: '/auth1',
+      builder: (context, state) => const forgotpass(), // Add this line
     ),
   ],
 );
