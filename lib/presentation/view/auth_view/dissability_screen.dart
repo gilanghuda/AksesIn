@@ -7,9 +7,9 @@ class DissabilityScreen extends StatefulWidget {
   final String option;
 
   const DissabilityScreen({
-    Key? key,
+    super.key,
     required this.option,
-  }) : super(key: key);
+  });
 
   @override
   _DissabilityScreenState createState() => _DissabilityScreenState();

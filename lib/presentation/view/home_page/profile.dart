@@ -4,6 +4,8 @@ import 'package:aksesin/data/models/user_model.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   
   @override
   Widget build(BuildContext context) {

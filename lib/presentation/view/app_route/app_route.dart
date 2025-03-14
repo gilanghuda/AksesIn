@@ -1,4 +1,6 @@
 import 'package:aksesin/presentation/view/auth_view/dissability_screen.dart';
+import 'package:aksesin/presentation/view/komunitas/komunitas_screen.dart';
+import 'package:aksesin/presentation/view/komunitas/post_komunitas_screen.dart';
 import 'package:aksesin/presentation/view/onboarding1.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -66,5 +68,12 @@ final GoRouter router = GoRouter(
       path: '/onboarding',
       builder: (context, state) => const Onboarding1(),
     ),
+    GoRoute(
+      path: '/komunitas',
+      builder: (context, state) => const KomunitasScreen(),
+    ),
+    GoRoute(
+      path: '/post-komunitas',
+      builder: (context, state) => PostKomunitasScreen(),)
   ],
 );

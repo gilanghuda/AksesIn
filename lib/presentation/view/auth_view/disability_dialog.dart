@@ -2,6 +2,8 @@ import 'package:aksesin/presentation/view/auth_view/button_disability_section.da
 import 'package:flutter/material.dart';
 
 class DisabilityDialog extends StatefulWidget {
+  const DisabilityDialog({super.key});
+
   @override
   _DisabilityDialogState createState() => _DisabilityDialogState();
 }

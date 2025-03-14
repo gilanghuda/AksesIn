@@ -5,7 +5,7 @@ import 'package:aksesin/presentation/widget/button.dart';
 class ButtonDisabilitySection extends StatefulWidget {
   final Function(List<String>) onSelectedOptionsChanged;
 
-  const ButtonDisabilitySection({Key? key, required this.onSelectedOptionsChanged}) : super(key: key);
+  const ButtonDisabilitySection({super.key, required this.onSelectedOptionsChanged});
 
   @override
   _ButtonDisabilitySectionState createState() => _ButtonDisabilitySectionState();

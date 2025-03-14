@@ -61,19 +61,31 @@ class _AksesJalanScreenState extends State<AksesJalanScreen> {
                           Icon(Icons.search, color: Colors.grey),
                           SizedBox(width: 8),
                           Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                hintText: 'Cari Lokasi',
-                                border: InputBorder.none,
-                              ),
-                              onSubmitted: (query) {
+                            child: GestureDetector(
+                              onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => AksesJalanDetailScreen(location: query),
+                                    builder: (context) => AksesJalanDetailScreen(location: ''),
                                   ),
                                 );
                               },
+                              child: AbsorbPointer(
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Cari Lokasi',
+                                    border: InputBorder.none,
+                                  ),
+                                  onSubmitted: (query) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AksesJalanDetailScreen(location: query),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                           IconButton(
