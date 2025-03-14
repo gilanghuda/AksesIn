@@ -45,6 +45,7 @@ void setupDependencyInjection() {
     addKomunitas: sl(),
     getKomunitas: sl(),
     updateKomunitas: sl(),
+    getComments: sl(),
   ));
 
   sl.registerLazySingleton<UserModel>(() => UserModel(

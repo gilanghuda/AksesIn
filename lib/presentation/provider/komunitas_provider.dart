@@ -8,11 +8,13 @@ class KomunitasProvider with ChangeNotifier {
   final GetKomunitas getKomunitas;
   final AddKomunitas addKomunitas;
   final UpdateKomunitas updateKomunitas;
+  final GetKomunitas getComments; 
 
   KomunitasProvider({
     required this.getKomunitas,
     required this.addKomunitas,
     required this.updateKomunitas,
+    required this.getComments, 
   });
 
   List<Komunitas> _komunitasList = [];
@@ -46,4 +48,29 @@ class KomunitasProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> addComment(String komunitasId, String comment) async {
+    await updateKomunitas.addComment(komunitasId, comment);
+    final index = _komunitasList.indexWhere((komunitas) => komunitas.id == komunitasId);
+    if (index != -1) {
+      final updatedComments = List<String>.from(_komunitasList[index].commentText)..add(comment);
+      _komunitasList[index] = _komunitasList[index].copyWith(commentText: updatedComments, commentsCount: _komunitasList[index].commentsCount + 1);
+      notifyListeners();
+    }
+  }
+
+  Future<void> deleteComment(String komunitasId, String comment) async {
+    await updateKomunitas.deleteComment(komunitasId, comment);
+    final index = _komunitasList.indexWhere((komunitas) => komunitas.id == komunitasId);
+    if (index != -1) {
+      final updatedComments = List<String>.from(_komunitasList[index].commentText)..remove(comment);
+      _komunitasList[index] = _komunitasList[index].copyWith(commentText: updatedComments, commentsCount: _komunitasList[index].commentsCount - 1);
+      notifyListeners();
+    }
+  }
+
+  Future<List<String>> fetchComments(String komunitasId) async {
+    return await getComments.getComments(komunitasId); 
+  }
+
 }

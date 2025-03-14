@@ -9,6 +9,7 @@ import 'package:aksesin/presentation/view/auth_view/register_screen.dart';
 import 'package:aksesin/presentation/view/home_page/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart'; 
+import 'package:aksesin/presentation/view/komunitas/comment_komunitas.dart';
 
 final GoRouter router = GoRouter(
   routes: [
@@ -74,6 +75,14 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/post-komunitas',
-      builder: (context, state) => PostKomunitasScreen(),)
+      builder: (context, state) => PostKomunitasScreen(),
+    ),
+    GoRoute(
+      path: '/comments/:komunitasId',
+      builder: (context, state) {
+        final komunitasId = state.pathParameters['komunitasId']!;
+        return CommentKomunitas(komunitasId: komunitasId);
+      },
+    ),
   ],
 );

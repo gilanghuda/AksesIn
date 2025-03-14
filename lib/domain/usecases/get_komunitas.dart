@@ -9,4 +9,9 @@ class GetKomunitas {
   Future<List<Komunitas>> call(String category) async {
     return await repository.getKomunitas(category);
   }
+
+  Future<List<String>> getComments(String komunitasId) async {
+    return await repository.fetchCommentsById(komunitasId);
+  }
 }
+

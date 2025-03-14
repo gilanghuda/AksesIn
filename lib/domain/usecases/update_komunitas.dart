@@ -8,4 +8,12 @@ class UpdateKomunitas {
   Future<void> updateLikes(String komunitasId, int newLikesCount, String userId) async {
     return await repository.updateLikes(komunitasId, newLikesCount, userId);
   }
+
+  Future<void> addComment(String komunitasId, String comment) async {
+    return await repository.addComment(komunitasId, comment);
+  }
+
+  Future<void> deleteComment(String komunitasId, String comment) async {
+    return await repository.deleteComment(komunitasId, comment);
+  }
 }

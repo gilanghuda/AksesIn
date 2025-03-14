@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchPostSection extends StatelessWidget {
   final Function(String) onCategorySelected;
@@ -69,14 +70,14 @@ class SearchPostSection extends StatelessWidget {
               TextButton(
                 child: Text('Batal'),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  context.pop();
                 },
               ),
               Text('Filter', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               TextButton(
                 child: Text('Terapkan'),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  context.pop();
                 },
               ),
             ],
@@ -95,7 +96,7 @@ class SearchPostSection extends StatelessWidget {
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
                       onCategorySelected('All');
-                      Navigator.of(context).pop();
+                      context.pop();
                     },
                   ),
                   FilterChip(
@@ -103,7 +104,7 @@ class SearchPostSection extends StatelessWidget {
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
                       onCategorySelected('Umum');
-                      Navigator.of(context).pop();
+                      context.pop();
                     },
                   ),
                   FilterChip(
@@ -111,7 +112,7 @@ class SearchPostSection extends StatelessWidget {
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
                       onCategorySelected('Tunanetra');
-                      Navigator.of(context).pop();
+                      context.pop();
                     },
                   ),
                   FilterChip(
@@ -119,7 +120,7 @@ class SearchPostSection extends StatelessWidget {
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
                       onCategorySelected('Tunarungu / wicara');
-                      Navigator.of(context).pop();
+                      context.pop();
                     },
                   ),
                   FilterChip(
@@ -127,7 +128,7 @@ class SearchPostSection extends StatelessWidget {
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
                       onCategorySelected('Keterbatasan Fisik');
-                      Navigator.of(context).pop();
+                      context.pop();
                     },
                   ),
                   FilterChip(
@@ -135,7 +136,7 @@ class SearchPostSection extends StatelessWidget {
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
                       onCategorySelected('Pendamping');
-                      Navigator.of(context).pop();
+                      context.pop();
                     },
                   ),
                 ],

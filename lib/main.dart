@@ -50,7 +50,8 @@ class MyApp extends StatelessWidget {
           create: (_) => KomunitasProvider(
             getKomunitas: di.sl(),
             addKomunitas: di.sl(),
-            updateKomunitas: di.sl()
+            updateKomunitas: di.sl(),
+            getComments: di.sl(),
 ),
         ),
       ],

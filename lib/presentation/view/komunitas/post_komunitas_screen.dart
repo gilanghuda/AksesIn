@@ -159,7 +159,7 @@ class _PostKomunitasScreenState extends State<PostKomunitasScreen> {
       );
 
       await Provider.of<KomunitasProvider>(context, listen: false).addNewKomunitas(komunitas);
-      context.pop('/komunitas') ;
+      context.pop('/komunitas');
     } catch (e) {
       setState(() {
         _errorMessage = e.toString();

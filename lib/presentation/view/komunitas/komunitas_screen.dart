@@ -170,7 +170,7 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
                           IconButton(
                             icon: const Icon(Icons.comment),
                             onPressed: () {
-                              // Handle comment action
+                              _showCommentsDialog(context, komunitasId, currentUser.id);
                             },
                           ),
                           Text('$comments'),
@@ -190,5 +190,9 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
   void _updateLikes(String komunitasId, int newLikesCount, String userId) async {
     await Provider.of<KomunitasProvider>(context, listen: false).updateLikes(komunitasId, newLikesCount, userId);
     setState(() {}); 
+  }
+
+  void _showCommentsDialog(BuildContext context, String komunitasId, String userId) {
+    context.push('/comments/$komunitasId');
   }
 }

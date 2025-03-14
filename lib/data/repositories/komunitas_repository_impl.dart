@@ -8,7 +8,6 @@ class KomunitasRepositoryImpl implements KomunitasRepository {
   final KomunitasFirestoreService _firestoreService;
   final FirebaseFirestore firestore;
 
-
   KomunitasRepositoryImpl(this._firestoreService, this.firestore);
 
   @override
@@ -25,7 +24,7 @@ class KomunitasRepositoryImpl implements KomunitasRepository {
       commentText: komunitas.commentText,
       images: komunitas.images,
       category: komunitas.category,
-      likedBy: komunitas.likedBy // Add this line
+      likedBy: komunitas.likedBy 
     );
     return _firestoreService.addKomunitas(komunitasModel);
   }
@@ -44,7 +43,7 @@ class KomunitasRepositoryImpl implements KomunitasRepository {
       commentText: komunitas.commentText,
       images: komunitas.images,
       category: komunitas.category,
-      likedBy: komunitas.likedBy // Add this line
+      likedBy: komunitas.likedBy 
     );
     return _firestoreService.updateKomunitas(komunitasModel);
   }
@@ -73,5 +72,20 @@ class KomunitasRepositoryImpl implements KomunitasRepository {
       'likesCount': newLikesCount,
       'likedBy': FieldValue.arrayUnion([userId]),
     });
+  }
+
+  @override
+  Future<void> addComment(String komunitasId, String comment) {
+    return _firestoreService.addComment(komunitasId, comment);
+  }
+
+  @override
+  Future<void> deleteComment(String komunitasId, String comment) {
+    return _firestoreService.deleteComment(komunitasId, comment);
+  }
+
+  @override
+  Future<List<String>> fetchCommentsById(String komunitasId) async {
+    return await _firestoreService.fetchCommentsById(komunitasId); 
   }
 }
