@@ -1,5 +1,5 @@
+import 'package:aksesin/presentation/view/komunitas/komunitas_screen.dart';
 import 'package:aksesin/presentation/view/home_page/akses_jalan.dart';
-import 'package:aksesin/presentation/view/home_page/komunitas.dart';
 import 'package:aksesin/presentation/view/home_page/profile.dart';
 import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
-        children: const [
+        children: [
           AksesJalanScreen(),
           KomunitasScreen(),
           ProfileScreen(),

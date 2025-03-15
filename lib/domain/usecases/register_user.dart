@@ -9,7 +9,7 @@ class RegisterUser implements UseCase<UserEntity, RegisterParams> {
 
   @override
   Future<UserEntity> call(RegisterParams params) async {
-    return await repository.register(params.email, params.username, params.password);
+    return await repository.register(params.email, params.username, params.password, params.disabilityOptions);
   }
 }
 
@@ -17,6 +17,7 @@ class RegisterParams {
   final String email;
   final String username;
   final String password;
+  final List<String> disabilityOptions;
 
-  RegisterParams({required this.email, required this.username, required this.password});
+  RegisterParams({required this.email, required this.username, required this.password, required this.disabilityOptions});
 }

@@ -12,7 +12,7 @@ import 'di/injection_container.dart' as di;
 import 'package:aksesin/data/datasource/auth_service.dart';
 import 'package:aksesin/presentation/provider/onboarding_provider.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'presentation/view/auth1.dart';
+import 'package:aksesin/presentation/provider/komunitas_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ void main() async {
   runApp(const MyApp());
 
   Future.delayed(const Duration(seconds: 2), () {
-    FlutterNativeSplash.remove();
+    FlutterNativeSplash.remove(); 
   });
 }
 
@@ -49,12 +49,20 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => OnboardingProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => KomunitasProvider(
+            getKomunitas: di.sl(),
+            addKomunitas: di.sl(),
+            updateKomunitas: di.sl(),
+            getComments: di.sl(),
+),
+        ),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'aksesin',
         theme: ThemeData(primarySwatch: Colors.blue),
-        home: const Profile1(), // Set forgotpass as the initial screen
+        routerConfig: router,
       ),
     );
   }

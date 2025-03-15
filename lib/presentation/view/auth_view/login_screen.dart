@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
@@ -17,6 +18,16 @@ class _LoginPageState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  void _showErrorToast(String message) {
+     Fluttertoast.showToast(
+       msg: message,
+       toastLength: Toast.LENGTH_SHORT,
+       gravity: ToastGravity.BOTTOM,
+       backgroundColor: Colors.red,
+       textColor: Colors.white,
+     );
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +156,14 @@ class _LoginPageState extends State<LoginScreen> {
                                       authProvider.errorMessage!,
                                       style: TextStyle(color: Colors.red),
                                     ),
+                                    Builder(
+                                     builder: (context) {
+                                       if (authProvider.errorMessage != null) {
+                                         _showErrorToast(authProvider.errorMessage!);
+                                       }
+                                       return SizedBox.shrink();
+                                     },
+                                   ),
                                   CustomButton(
                                     text: 'Masuk',
                                     onPressed: () {
@@ -171,7 +190,7 @@ class _LoginPageState extends State<LoginScreen> {
                           Text('Belum punya akun?'),
                           TextButton(
                             onPressed: () {
-                              context.go('/register');
+                              context.go('/dissability');
                             },
                             child: Text( 
                               'Sign Up', 
@@ -201,9 +220,11 @@ class _LoginPageState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 16),
                 OutlinedButton.icon(
-                  onPressed: () {
-                    authProvider.signInWithGoogle(context);
-                  },
+                  onPressed: authProvider.isLoading
+                       ? null
+                       : () {
+                           authProvider.signInWithGoogle(context);
+                         },
                   icon: Image.asset(
                     'assets/images/logo_google.png', 
                     height: 24,

@@ -1,17 +1,36 @@
 import 'package:aksesin/data/models/user_model.dart';
+import 'package:aksesin/presentation/view/auth_view/disability_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; 
+import 'package:flutter/material.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance; 
 
-  Future<UserModel> register(String email, String username, String password) async {
+  Future<UserModel> register(String email, String username, String password, List<String> disabilityOptions) async {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       final firebaseUser = userCredential.user;
       await firebaseUser!.updateDisplayName(username);
-      return UserModel(id: firebaseUser.uid, username: username, email: firebaseUser.email!);
+
+     
+      await _firestore.collection('users').doc(firebaseUser.uid).set({
+        'username': username,
+        'email': email,
+        'disabilityOptions': disabilityOptions,
+        'photoUrl': firebaseUser.photoURL, 
+      });
+
+      return UserModel(
+        id: firebaseUser.uid,
+        username: username,
+        email: firebaseUser.email!,
+        disabilityOptions: disabilityOptions,
+        photoUrl: firebaseUser.photoURL, 
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw Exception('The password provided is too weak.');
@@ -29,7 +48,20 @@ class FirebaseAuthService {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
       final firebaseUser = userCredential.user;
-      return UserModel(id: firebaseUser!.uid, username: firebaseUser.displayName ?? '', email: firebaseUser.email!);
+
+    
+      DocumentSnapshot userDoc = await _firestore.collection('users').doc(firebaseUser!.uid).get();
+      String username = userDoc['username'];
+      List<String> disabilityOptions = List<String>.from(userDoc['disabilityOptions']);
+      String? photoUrl = userDoc['photoUrl']; 
+
+      return UserModel(
+        id: firebaseUser.uid,
+        username: username,
+        email: firebaseUser.email!,
+        disabilityOptions: disabilityOptions,
+        photoUrl: photoUrl, 
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'network-request-failed') {
         throw Exception('Gagal login, Cek koneksi internet anda');
@@ -43,7 +75,7 @@ class FirebaseAuthService {
     }
   }
 
-  Future<UserModel> signInWithGoogle() async {
+  Future<UserModel> signInWithGoogle(BuildContext context) async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
@@ -58,7 +90,35 @@ class FirebaseAuthService {
 
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
       final firebaseUser = userCredential.user;
-      return UserModel(id: firebaseUser!.uid, username: firebaseUser.displayName ?? '', email: firebaseUser.email!);
+
+      DocumentSnapshot userDoc = await _firestore.collection('users').doc(firebaseUser!.uid).get();
+      List<String> disabilityOptions = [];
+      if (!userDoc.exists) {
+
+        disabilityOptions = await showDialog<List<String>>(
+          context: context,
+          builder: (BuildContext context) {
+            return DisabilityDialog();
+          },
+        ) ?? [];
+
+        await _firestore.collection('users').doc(firebaseUser.uid).set({
+          'username': firebaseUser.displayName,
+          'email': firebaseUser.email,
+          'disabilityOptions': disabilityOptions,
+          'photoUrl': firebaseUser.photoURL,
+        });
+      } else {
+        disabilityOptions = List<String>.from(userDoc['disabilityOptions']);
+      }
+
+      return UserModel(
+        id: firebaseUser.uid,
+        username: firebaseUser.displayName!,
+        email: firebaseUser.email!,
+        disabilityOptions: disabilityOptions,
+        photoUrl: firebaseUser.photoURL,
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'sign_in_failed') {
         throw Exception('Google sign-in failed. Please check your configuration.');
@@ -83,6 +143,24 @@ class FirebaseAuthService {
       'name': user.displayName,
       'email': user.email,
     };
+  }
+
+  Future<UserModel> getCurrentUserProfile() async {
+    final User? firebaseUser = _auth.currentUser;
+    if (firebaseUser == null) throw Exception('No user is currently signed in.');
+
+    DocumentSnapshot userDoc = await _firestore.collection('users').doc(firebaseUser.uid).get();
+    String username = userDoc['username'];
+    List<String> disabilityOptions = List<String>.from(userDoc['disabilityOptions']);
+    String? photoUrl = userDoc['photoUrl'];
+
+    return UserModel(
+      id: firebaseUser.uid,
+      username: username,
+      email: firebaseUser.email!,
+      disabilityOptions: disabilityOptions,
+      photoUrl: photoUrl,
+    );
   }
 
   Future<void> signOut() async {

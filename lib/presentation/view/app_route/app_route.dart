@@ -1,3 +1,6 @@
+import 'package:aksesin/presentation/view/auth_view/dissability_screen.dart';
+import 'package:aksesin/presentation/view/komunitas/komunitas_screen.dart';
+import 'package:aksesin/presentation/view/komunitas/post_komunitas_screen.dart';
 import 'package:aksesin/presentation/view/onboarding1.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -5,14 +8,11 @@ import 'package:aksesin/presentation/view/auth_view/login_screen.dart';
 import 'package:aksesin/presentation/view/auth_view/register_screen.dart';
 import 'package:aksesin/presentation/view/home_page/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:aksesin/presentation/view/auth1.dart'; // Import the auth1.dart file
+import 'package:shared_preferences/shared_preferences.dart'; 
+import 'package:aksesin/presentation/view/komunitas/comment_komunitas.dart';
 
 final GoRouter router = GoRouter(
   routes: [
-    // GoRoute(path: '/',
-    // builder: (context, state) => const SplashScreen(),
-    // ),
     GoRoute(
       path: '/',
       builder: (context, state) {
@@ -45,8 +45,22 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
+      path: '/dissability',
+      builder: (context, state) => const DissabilityScreen(option: ''),
+    ),
+    GoRoute(
+      path: '/dissability/:option',
+      builder: (context, state) {
+        final option = state.pathParameters['option'] ?? '';
+        return DissabilityScreen(option: option);
+      },
+    ),
+    GoRoute(
       path: '/register',
-      builder: (context, state) => const RegisterScreen(),
+      builder: (context, state) {
+        final options = state.extra as List<String>?;
+        return RegisterScreen(options: options);
+      },
     ),
     GoRoute(
       path: '/home',
@@ -57,8 +71,19 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const Onboarding1(),
     ),
     GoRoute(
-      path: '/auth1',
-      builder: (context, state) => const forgotpass(), // Add this line
+      path: '/komunitas',
+      builder: (context, state) => const KomunitasScreen(),
+    ),
+    GoRoute(
+      path: '/post-komunitas',
+      builder: (context, state) => PostKomunitasScreen(),
+    ),
+    GoRoute(
+      path: '/comments/:komunitasId',
+      builder: (context, state) {
+        final komunitasId = state.pathParameters['komunitasId']!;
+        return CommentKomunitas(komunitasId: komunitasId);
+      },
     ),
   ],
 );
