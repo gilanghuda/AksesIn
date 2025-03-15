@@ -4,9 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
 import 'package:aksesin/presentation/widget/button.dart';
 import 'package:aksesin/presentation/widget/styles.dart';
+import 'package:fluttertoast/fluttertoast.dart'; 
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  final String? option;
+  final List<String>? options;
+  const RegisterScreen({super.key, this.option, this.options});
 
   @override
   _RegisterpPageState createState() => _RegisterpPageState();
@@ -19,10 +22,22 @@ class _RegisterpPageState extends State<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  List<String> _selectedDisabilityOptions = [];
+
+  void _showErrorToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
+    _selectedDisabilityOptions = widget.options ?? [];
 
     return Scaffold(
       body: SafeArea(
@@ -91,7 +106,7 @@ class _RegisterpPageState extends State<RegisterScreen> {
                           if (!emailRegex.hasMatch(value)) {
                             return 'Format email tidak valid';
                           }
-                          return 'Email sudah terdaftar';
+                          return null;
                         },
                       ),
                       const SizedBox(height: 8),
@@ -189,6 +204,7 @@ class _RegisterpPageState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       authProvider.isLoading
                           ? Center(child: CircularProgressIndicator())
                           : CustomButton(
@@ -200,10 +216,19 @@ class _RegisterpPageState extends State<RegisterScreen> {
                                     _usernameController.text,
                                     _passwordController.text,
                                     context,
+                                    _selectedDisabilityOptions,
                                   );
                                 }
                               },
                             ),
+                      Builder(
+                        builder: (context) {
+                          if (authProvider.errorMessage != null) {
+                            _showErrorToast(authProvider.errorMessage!);
+                          }
+                          return SizedBox.shrink();
+                        },
+                      ),
                       const SizedBox(height: 4),
                     ],
                   ),
