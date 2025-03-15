@@ -23,7 +23,8 @@ final GoRouter router = GoRouter(
               return CircularProgressIndicator();
             } else {
               final prefs = snapshot.data as SharedPreferences;
-              final bool? onboardingCompleted = prefs.getBool('onboardingCompleted');
+              final bool? onboardingCompleted =
+                  prefs.getBool('onboardingCompleted');
               final user = FirebaseAuth.instance.currentUser;
               if (onboardingCompleted == true) {
                 if (user != null) {

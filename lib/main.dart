@@ -1,4 +1,8 @@
 import 'package:aksesin/presentation/provider/auth_provider.dart';
+import 'package:aksesin/presentation/view/OTP.dart';
+import 'package:aksesin/presentation/view/Profile.dart';
+import 'package:aksesin/presentation/view/Profile1.dart';
+import 'package:aksesin/presentation/view/Resetpass.dart';
 import 'package:aksesin/presentation/view/app_route/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,10 +39,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => AuthProvider(
-            loginUser: di.sl(),
-            registerUser: di.sl(),
-            authService: FirebaseAuthService()
-          ),
+              loginUser: di.sl(),
+              registerUser: di.sl(),
+              authService: FirebaseAuthService()),
         ),
         Provider<FirebaseAuthService>(
           create: (_) => di.sl<FirebaseAuthService>(),
