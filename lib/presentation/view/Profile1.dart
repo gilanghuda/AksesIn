@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:aksesin/presentation/provider/auth_provider.dart';
+import 'package:fluttertoast/fluttertoast.dart'; // Import fluttertoast
 
 class Profile1 extends StatefulWidget {
   const Profile1({super.key});
@@ -24,6 +28,36 @@ class _ProfileState1 extends State<Profile1> {
     _nameController.dispose();
     _emailController.dispose();
     super.dispose();
+  }
+
+  Future<void> _updateProfile() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    try {
+      await authProvider.updateProfile(
+        _nameController.text,
+        _emailController.text,
+        null, // Add logic to handle photoUrl if needed
+      );
+
+      setState(() {
+        _buttonColor = Color(0xFF0064D1); // Change button color to blue
+      });
+      Future.delayed(Duration(milliseconds: 100), () {
+        setState(() {
+          _buttonColor = Color(0xFFCFCFCF); // Change back to base color
+        });
+      });
+    } catch (e) {
+      // Handle error
+      Fluttertoast.showToast(
+        msg: 'Failed to update profile: $e',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
   }
 
   @override
@@ -55,7 +89,7 @@ class _ProfileState1 extends State<Profile1> {
                   icon: Icon(Icons.arrow_back_ios_new_outlined,
                       color: Color(0xFF0064D1), size: 23),
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    context.pop();
                   },
                 ),
               ),
@@ -225,18 +259,7 @@ class _ProfileState1 extends State<Profile1> {
                         ),
                         SizedBox(height: 140), // Add 50px of whitespace
                         ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              _buttonColor = Color(
-                                  0xFF0064D1); // Change button color to blue
-                            });
-                            Future.delayed(Duration(milliseconds: 100), () {
-                              setState(() {
-                                _buttonColor = Color(
-                                    0xFFCFCFCF); // Change back to base color
-                              });
-                            });
-                          },
+                          onPressed: _updateProfile,
                           child: Text(
                             'Simpan Perubahan',
                             style: TextStyle(

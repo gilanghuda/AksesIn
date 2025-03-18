@@ -15,7 +15,7 @@ class KomunitasScreen extends StatefulWidget {
 }
 
 class _KomunitasScreenState extends State<KomunitasScreen> {
-  String _selectedCategory = 'All';
+  List<String> _selectedCategories = ['All'];
 
   @override
   void initState() {
@@ -24,9 +24,9 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
     });
   }
 
-  void _updateCategory(String category) {
+  void _updateCategory(String categories) {
     setState(() {
-      _selectedCategory = category;
+      _selectedCategories = categories.split(', ');
     });
   }
 
@@ -48,11 +48,11 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
           ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: _selectedCategory == 'All'
+              stream: _selectedCategories.contains('All')
                   ? FirebaseFirestore.instance.collection('komunitas').snapshots()
                   : FirebaseFirestore.instance
                       .collection('komunitas')
-                      .where('category', isEqualTo: _selectedCategory)
+                      .where('category', whereIn: _selectedCategories)
                       .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {

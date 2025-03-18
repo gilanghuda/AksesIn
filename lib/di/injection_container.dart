@@ -10,6 +10,7 @@ import 'package:aksesin/domain/usecases/login_user.dart';
 import 'package:aksesin/domain/usecases/register_user.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
 import 'package:aksesin/presentation/provider/komunitas_provider.dart';
+import 'package:aksesin/presentation/provider/maps_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:aksesin/data/models/user_model.dart'; 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -47,6 +48,8 @@ void setupDependencyInjection() {
     updateKomunitas: sl(),
     getComments: sl(),
   ));
+
+  sl.registerLazySingleton<MapsProvider>(() => MapsProvider());
 
   sl.registerLazySingleton<UserModel>(() => UserModel(
     id: '',

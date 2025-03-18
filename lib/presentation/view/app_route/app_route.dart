@@ -1,3 +1,8 @@
+import 'package:aksesin/presentation/view/OTP.dart';
+import 'package:aksesin/presentation/view/Profile1.dart';
+import 'package:aksesin/presentation/view/Resetpass.dart';
+import 'package:aksesin/presentation/view/akses_jalan_detail/map_navigation.dart';
+import 'package:aksesin/presentation/view/auth1.dart';
 import 'package:aksesin/presentation/view/auth_view/dissability_screen.dart';
 import 'package:aksesin/presentation/view/komunitas/komunitas_screen.dart';
 import 'package:aksesin/presentation/view/komunitas/post_komunitas_screen.dart';
@@ -85,5 +90,28 @@ final GoRouter router = GoRouter(
         return CommentKomunitas(komunitasId: komunitasId);
       },
     ),
+    GoRoute(
+      path: '/forgot-password',
+      builder: (context, state) => const forgotpass(),
+    ),
+    GoRoute(
+      path: '/otp-page',
+      builder: (context, state) => const OTP(),
+    ),
+    GoRoute(
+      path: '/resetpass',
+      builder: (context, state) => const Resetpass(),
+    ),
+    GoRoute(
+      path: '/edit-profile',
+      builder: (context, state) => const Profile1(),
+    ),
+    GoRoute(
+      path: '/map',
+      builder: (context, state) {
+        final destinationAddress = state.extra as String?;
+        return MapView(destinationAddress: destinationAddress);
+      },
+    )
   ],
 );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class forgotpass extends StatefulWidget {
   const forgotpass({super.key});
@@ -123,7 +124,7 @@ class _forgotpassState extends State<forgotpass> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Handle next logic here
+                        context.go('/otp-page');
                       },
                       child: Text('Selanjutnya',
                           style: TextStyle(color: Colors.white)),

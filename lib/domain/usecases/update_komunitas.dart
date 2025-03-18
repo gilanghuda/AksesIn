@@ -16,4 +16,7 @@ class UpdateKomunitas {
   Future<void> deleteComment(String komunitasId, String comment) async {
     return await repository.deleteComment(komunitasId, comment);
   }
+  Future<void> unlikekomunitas(String komunitasId, int newLikesCount, String userId) {
+    return repository.unlikeKomunitas(komunitasId, newLikesCount, userId);
+  }
 }

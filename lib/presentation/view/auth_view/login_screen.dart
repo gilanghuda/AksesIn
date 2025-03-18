@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginScreen> {
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () {
-                            // forgot password ini nanti
+                            context.go('/forgot-password');
                           },
                           child: Text(
                             'Lupa Password?',

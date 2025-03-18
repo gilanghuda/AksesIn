@@ -1,6 +1,6 @@
+import 'package:aksesin/presentation/view/Profile.dart';
 import 'package:aksesin/presentation/view/komunitas/komunitas_screen.dart';
 import 'package:aksesin/presentation/view/home_page/akses_jalan.dart';
-import 'package:aksesin/presentation/view/home_page/profile.dart';
 import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -29,14 +29,14 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           AksesJalanScreen(),
           KomunitasScreen(),
-          ProfileScreen(),
+          Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: true,
         showUnselectedLabels: false, 
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColors.secondaryColor,
+        selectedItemColor: AppColors.primaryColor,
         unselectedItemColor: Colors.blueGrey,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

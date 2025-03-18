@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class SearchPostSection extends StatelessWidget {
+class SearchPostSection extends StatefulWidget {
   final Function(String) onCategorySelected;
 
   const SearchPostSection({super.key, required this.onCategorySelected});
+
+  @override
+  _SearchPostSectionState createState() => _SearchPostSectionState();
+}
+
+class _SearchPostSectionState extends State<SearchPostSection> {
+  List<String> _selectedCategories = ['All'];
+  List<String> _tempSelectedCategories = ['All']; 
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +66,7 @@ class SearchPostSection extends StatelessWidget {
   }
 
   void _showFilterDialog(BuildContext context) {
+    _tempSelectedCategories = List.from(_selectedCategories); // Copy current selection
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -77,6 +86,10 @@ class SearchPostSection extends StatelessWidget {
               TextButton(
                 child: Text('Terapkan'),
                 onPressed: () {
+                  setState(() {
+                    _selectedCategories = List.from(_tempSelectedCategories);
+                  });
+                  widget.onCategorySelected(_selectedCategories.join(', '));
                   context.pop();
                 },
               ),
@@ -93,50 +106,72 @@ class SearchPostSection extends StatelessWidget {
                 children: [
                   FilterChip(
                     label: Text('Semua'),
+                    selected: _tempSelectedCategories.contains('All'),
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
-                      onCategorySelected('All');
-                      context.pop();
+                      setState(() {
+                        if (value) {
+                          _tempSelectedCategories = ['All'];
+                        } else {
+                          _tempSelectedCategories.remove('All');
+                        }
+                      });
                     },
                   ),
                   FilterChip(
-                    label: Text('Umum'),
+                    label: Text('Tuna Netra'),
+                    selected: _tempSelectedCategories.contains('Tuna Netra'),
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
-                      onCategorySelected('Umum');
-                      context.pop();
+                      setState(() {
+                        if (value) {
+                          _tempSelectedCategories.add('Tuna Netra');
+                        } else {
+                          _tempSelectedCategories.remove('Tuna Netra');
+                        }
+                      });
                     },
                   ),
                   FilterChip(
-                    label: Text('Tunanetra'),
+                    label: Text('Tunarungu / Wicara'),
+                    selected: _tempSelectedCategories.contains('Tunarungu / Wicara'),
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
-                      onCategorySelected('Tunanetra');
-                      context.pop();
-                    },
-                  ),
-                  FilterChip(
-                    label: Text('Tunarungu / wicara'),
-                    selectedColor: Colors.blue,
-                    onSelected: (bool value) {
-                      onCategorySelected('Tunarungu / wicara');
-                      context.pop();
+                      setState(() {
+                        if (value) {
+                          _tempSelectedCategories.add('Tunarungu / Wicara');
+                        } else {
+                          _tempSelectedCategories.remove('Tunarungu / Wicara');
+                        }
+                      });
                     },
                   ),
                   FilterChip(
                     label: Text('Keterbatasan Fisik'),
+                    selected: _tempSelectedCategories.contains('Keterbatasan Fisik'),
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
-                      onCategorySelected('Keterbatasan Fisik');
-                      context.pop();
+                      setState(() {
+                        if (value) {
+                          _tempSelectedCategories.add('Keterbatasan Fisik');
+                        } else {
+                          _tempSelectedCategories.remove('Keterbatasan Fisik');
+                        }
+                      });
                     },
                   ),
                   FilterChip(
                     label: Text('Pendamping'),
+                    selected: _tempSelectedCategories.contains('Pendamping'),
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
-                      onCategorySelected('Pendamping');
-                      context.pop();
+                      setState(() {
+                        if (value) {
+                          _tempSelectedCategories.add('Pendamping');
+                        } else {
+                          _tempSelectedCategories.remove('Pendamping');
+                        }
+                      });
                     },
                   ),
                 ],

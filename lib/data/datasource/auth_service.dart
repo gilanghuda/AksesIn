@@ -150,6 +150,8 @@ class FirebaseAuthService {
     if (firebaseUser == null) throw Exception('No user is currently signed in.');
 
     DocumentSnapshot userDoc = await _firestore.collection('users').doc(firebaseUser.uid).get();
+    if (!userDoc.exists) throw Exception('User profile not found.');
+
     String username = userDoc['username'];
     List<String> disabilityOptions = List<String>.from(userDoc['disabilityOptions']);
     String? photoUrl = userDoc['photoUrl'];
@@ -161,6 +163,23 @@ class FirebaseAuthService {
       disabilityOptions: disabilityOptions,
       photoUrl: photoUrl,
     );
+  }
+
+  Future<void> updateProfile(String username, String email, String? photoUrl) async {
+    final User? firebaseUser = _auth.currentUser;
+    if (firebaseUser == null) throw Exception('No user is currently signed in.');
+
+    await firebaseUser.updateDisplayName(username);
+    await firebaseUser.updateEmail(email);
+    if (photoUrl != null) {
+      await firebaseUser.updatePhotoURL(photoUrl);
+    }
+
+    await _firestore.collection('users').doc(firebaseUser.uid).update({
+      'username': username,
+      'email': email,
+      'photoUrl': photoUrl,
+    });
   }
 
   Future<void> signOut() async {

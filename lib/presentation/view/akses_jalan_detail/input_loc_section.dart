@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class InputLocSection extends StatelessWidget {
   const InputLocSection({super.key});
@@ -42,6 +43,9 @@ class InputLocSection extends StatelessWidget {
             ],
           ),
           child: TextField(
+            onSubmitted: (value) {
+              context.push('/map', extra: value);
+            },
             decoration: InputDecoration(
               hintText: 'Cari Lokasi',
               prefixIcon: IconButton(
