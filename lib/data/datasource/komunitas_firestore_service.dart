@@ -47,6 +47,13 @@ class KomunitasFirestoreService {
     });
   }
 
+  Future<void> unlikeKomunitas(String komunitasId, int newLikesCount, String userId) {
+    return _komunitasCollection.doc(komunitasId).update({
+      'likesCount': newLikesCount,
+      'likedBy': FieldValue.arrayRemove([userId]),
+    });
+  }
+
   Stream<List<KomunitasModel>> getKomunitas() {
     return _komunitasCollection.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => KomunitasModel.fromMap(doc.data() as Map<String, dynamic>)).toList();

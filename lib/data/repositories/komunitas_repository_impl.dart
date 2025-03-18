@@ -75,6 +75,15 @@ class KomunitasRepositoryImpl implements KomunitasRepository {
   }
 
   @override
+  Future<void> unlikeKomunitas(String komunitasId, int newLikesCount, String userId) async {
+    final docRef = firestore.collection('komunitas').doc(komunitasId);
+    await docRef.update({
+      'likesCount': newLikesCount,
+      'likedBy': FieldValue.arrayRemove([userId]),
+    });
+  }
+
+  @override
   Future<void> addComment(String komunitasId, String comment) {
     return _firestoreService.addComment(komunitasId, comment);
   }

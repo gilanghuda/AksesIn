@@ -157,7 +157,9 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
                               color: likedBy.contains(currentUser.id) ? Colors.blue : null,
                             ),
                             onPressed: () {
-                              if (!likedBy.contains(currentUser.id)) {
+                              if (likedBy.contains(currentUser.id)) {
+                                _updateLikes(komunitasId, likes - 1, currentUser.id, unlike: true);
+                              } else {
                                 _updateLikes(komunitasId, likes + 1, currentUser.id);
                               }
                             },
@@ -187,9 +189,13 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
     );
   }
 
-  void _updateLikes(String komunitasId, int newLikesCount, String userId) async {
-    await Provider.of<KomunitasProvider>(context, listen: false).updateLikes(komunitasId, newLikesCount, userId);
-    setState(() {}); 
+  void _updateLikes(String komunitasId, int newLikesCount, String userId, {bool unlike = false}) async {
+    if (unlike) {
+      await Provider.of<KomunitasProvider>(context, listen: false).unlikeKomunitas(komunitasId, newLikesCount, userId);
+    } else {
+      await Provider.of<KomunitasProvider>(context, listen: false).updateLikes(komunitasId, newLikesCount, userId);
+    }
+    setState(() {});
   }
 
   void _showCommentsDialog(BuildContext context, String komunitasId, String userId) {
