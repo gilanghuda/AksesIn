@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:aksesin/data/datasource/map_service.dart'; 
 
 class MapsProvider with ChangeNotifier {
   late Position _currentPosition;
@@ -45,5 +46,9 @@ class MapsProvider with ChangeNotifier {
   void clearPolylineCoordinates() {
     polylineCoordinates.clear();
     notifyListeners();
+  }
+
+  Future<void> updateUserLocationInFirestore() async {
+    await MapService.updateUserLocationInFirestore(_currentPosition);
   }
 }

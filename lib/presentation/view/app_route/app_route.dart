@@ -17,6 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aksesin/presentation/view/komunitas/comment_komunitas.dart';
 import 'package:provider/provider.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart' as aksesin_auth;
+import 'package:aksesin/presentation/view/pendamping_page/track_teman.dart';
+import 'package:aksesin/presentation/view/pendamping_page/akses_teman.dart';
 
 Future<String> getDisabilityOption(BuildContext context) async {
   final userProfile = await Provider.of<aksesin_auth.AuthProvider>(context, listen: false).getCurrentUserProfile();
@@ -153,6 +155,17 @@ final GoRouter router = GoRouter(
         final destinationAddress = state.extra as String?;
         return MapView(destinationAddress: destinationAddress);
       },
-    )
+    ),
+    GoRoute(
+      path: '/track-teman',
+      builder: (context, state) {
+        final userId = state.extra as String;
+        return TrackTemanPage(userId: userId);
+      },
+    ),
+    GoRoute(
+      path: '/akses-teman',
+      builder: (context, state) => AksesTemanScreen(),
+    ),
   ],
 );

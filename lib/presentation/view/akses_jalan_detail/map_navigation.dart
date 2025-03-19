@@ -50,6 +50,8 @@ class _MapViewState extends State<MapView> {
 
   bool _showRouteBottomSection = false;
 
+  late StreamSubscription<Position> _positionStreamSubscription;
+
   @override
   void initState() {
     super.initState();
@@ -61,6 +63,20 @@ class _MapViewState extends State<MapView> {
       destinationAddressController.text = widget.destinationAddress!;
       _destinationAddress = widget.destinationAddress!;
     }
+
+    _positionStreamSubscription = Geolocator.getPositionStream(
+    ).listen((Position position) {
+      Provider.of<MapsProvider>(context, listen: false).setCurrentPosition(position);
+      mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(position.latitude, position.longitude),
+            zoom: 18.0,
+          ),
+        ),
+      );
+      _getAddress();
+    });
 
     _scrollController.addListener(() {
       if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
@@ -74,6 +90,7 @@ class _MapViewState extends State<MapView> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _positionStreamSubscription.cancel();
     super.dispose();
   }
 
@@ -127,21 +144,18 @@ class _MapViewState extends State<MapView> {
   }
 
   _getCurrentLocation() async {
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) async {
-      Provider.of<MapsProvider>(context, listen: false).setCurrentPosition(position);
-      mapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(position.latitude, position.longitude),
-            zoom: 18.0,
-          ),
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Provider.of<MapsProvider>(context, listen: false).setCurrentPosition(position);
+    await Provider.of<MapsProvider>(context, listen: false).updateUserLocationInFirestore();
+    mapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(position.latitude, position.longitude),
+          zoom: 18.0,
         ),
-      );
-      await _getAddress();
-    }).catchError((e) {
-      print(e);
-    });
+      ),
+    );
+    await _getAddress();
   }
 
   _getAddress() async {
@@ -403,7 +417,7 @@ class _MapViewState extends State<MapView> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    context.pop();
                   },
                   child: Text(
                     'Mulai Perjalanan'.toUpperCase(),

@@ -1,3 +1,4 @@
+import 'package:aksesin/domain/usecases/track_user.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
 import 'package:aksesin/presentation/provider/maps_provider.dart';
 import 'package:aksesin/presentation/view/app_route/app_route.dart';
@@ -56,6 +57,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.sl<MapsProvider>(),
+        ),
+        Provider<TrackUserById>(
+          create: (_) => di.sl<TrackUserById>(),
         ),
       ],
       child: MaterialApp.router(

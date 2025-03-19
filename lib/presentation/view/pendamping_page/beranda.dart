@@ -1,10 +1,9 @@
-import 'package:aksesin/presentation/view/akses_jalan_detail/akses_jalan_detail.dart';
-import 'package:aksesin/presentation/view/pendamping_page/akses_teman.dart';
 import 'package:aksesin/presentation/widget/button.dart';
 import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
+import 'package:go_router/go_router.dart';
 
 class BerandaScreen extends StatefulWidget {
   const BerandaScreen({super.key});
@@ -63,12 +62,7 @@ class _BerandaScreenState extends State<BerandaScreen> {
                             height: 24, 
                           ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AksesTemanScreen(),
-                              ),
-                            );
+                            context.push('/akses-teman');
                           },
                           backgroundColor: Colors.white,
                           textColor: Colors.black,
@@ -84,12 +78,7 @@ class _BerandaScreenState extends State<BerandaScreen> {
                             height: 24, 
                           ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AksesJalanDetailScreen(location: ''),
-                              ),
-                            );
+                            GoRouter.of(context).push('/akses-jalan', extra: '');
                           },
                           backgroundColor: Colors.white,
                           textColor: Colors.black,

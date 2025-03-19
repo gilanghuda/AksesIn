@@ -15,6 +15,9 @@ import 'package:get_it/get_it.dart';
 import 'package:aksesin/data/models/user_model.dart'; 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:aksesin/domain/usecases/update_komunitas.dart';
+import 'package:aksesin/data/repositories/user_tracking_repository_impl.dart';
+import 'package:aksesin/domain/repositories/user_tracking_repository.dart';
+import 'package:aksesin/domain/usecases/track_user.dart';
 
 final sl = GetIt.instance;
 
@@ -27,6 +30,7 @@ void setupDependencyInjection() {
   // Repository Layer
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerLazySingleton<KomunitasRepository>(() => KomunitasRepositoryImpl(sl(), sl()));
+  sl.registerLazySingleton<UserTrackingRepository>(() => UserTrackingRepositoryImpl(sl()));
 
   // Use Cases
   sl.registerLazySingleton<LoginUser>(() => LoginUser(sl()));
@@ -34,6 +38,8 @@ void setupDependencyInjection() {
   sl.registerLazySingleton<AddKomunitas>(() => AddKomunitas(sl()));
   sl.registerLazySingleton<GetKomunitas>(() => GetKomunitas(sl()));
   sl.registerLazySingleton<UpdateKomunitas>(() => UpdateKomunitas(sl()));
+
+  sl.registerLazySingleton<TrackUserById>(() => TrackUserById(sl()));
 
   // Providers
   sl.registerLazySingleton<AuthProvider>(() => AuthProvider(

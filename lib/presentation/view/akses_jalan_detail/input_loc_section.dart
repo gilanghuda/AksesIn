@@ -51,7 +51,7 @@ class InputLocSection extends StatelessWidget {
               prefixIcon: IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.pop(context);
+                  context.pop();
                 },
               ),
               suffixIcon: Icon(Icons.mic),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class RouteBottomSection extends StatelessWidget {
   final String? placeDistance;
@@ -51,7 +52,7 @@ class RouteBottomSection extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  // Add your exit button functionality here
+                  context.pop();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,

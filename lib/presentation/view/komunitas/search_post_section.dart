@@ -66,7 +66,7 @@ class _SearchPostSectionState extends State<SearchPostSection> {
   }
 
   void _showFilterDialog(BuildContext context) {
-    _tempSelectedCategories = List.from(_selectedCategories); // Copy current selection
+    _tempSelectedCategories = List.from(_selectedCategories); 
     showDialog(
       context: context,
       builder: (BuildContext context) {

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:aksesin/presentation/widget/button.dart';
+import 'package:go_router/go_router.dart'; 
 
 class AksesTemanScreen extends StatelessWidget {
+  final TextEditingController _userIdController = TextEditingController(); 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +12,7 @@ class AksesTemanScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop();
+            context.pop();
           },
         ),
       ),
@@ -41,6 +44,7 @@ class AksesTemanScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: TextField(
+                controller: _userIdController, 
                 decoration: InputDecoration(
                   border: InputBorder.none,
                 ),
@@ -53,7 +57,7 @@ class AksesTemanScreen extends StatelessWidget {
             CustomButton(
               text: 'Masuk',
               onPressed: () {
-                
+                GoRouter.of(context).push('/track-teman', extra: _userIdController.text);
               },
             ),
             SizedBox(height: 16),

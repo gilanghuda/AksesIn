@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void showBottomSheet(BuildContext context, String destinationAddress, String? placeDistance) {
   showModalBottomSheet(
@@ -96,7 +97,7 @@ void showBottomSheet(BuildContext context, String destinationAddress, String? pl
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  context.pop();
                 },
                 child: Text(
                   'Mulai Perjalanan'.toUpperCase(),
