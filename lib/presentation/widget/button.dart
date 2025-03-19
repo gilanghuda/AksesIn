@@ -9,7 +9,8 @@ class CustomButton extends StatelessWidget {
   final double verticalPadding;
   final double horizontalPadding;
   final double borderRadius;
-  final double width; 
+  final double width;
+  final Widget? icon; 
 
   const CustomButton({
     super.key,
@@ -21,7 +22,8 @@ class CustomButton extends StatelessWidget {
     this.verticalPadding = 16,
     this.horizontalPadding = 0,
     this.borderRadius = 10,
-    this.width = double.infinity, 
+    this.width = double.infinity,
+    this.icon, 
   });
 
   @override
@@ -37,13 +39,22 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius),
           ),
         ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: textColor,
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (icon != null) ...[
+              icon!,
+              SizedBox(width: 8),
+            ],
+            Text(
+              text,
+              style: TextStyle(
+                color: textColor,
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ),
     );

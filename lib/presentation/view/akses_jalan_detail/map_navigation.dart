@@ -4,6 +4,10 @@ import 'dart:math';
 import 'package:aksesin/data/datasource/map_service.dart';
 import 'package:aksesin/presentation/provider/maps_provider.dart';
 import 'package:aksesin/presentation/view/akses_jalan_detail/BottomPlaceInfo.dart';
+import 'package:aksesin/presentation/view/akses_jalan_detail/akses_teman_dialog.dart';
+import 'package:aksesin/presentation/view/akses_jalan_detail/cuaca_dialog.dart';
+import 'package:aksesin/presentation/view/akses_jalan_detail/kondisi_dialog.dart';
+import 'package:aksesin/presentation/view/akses_jalan_detail/route_bottom_section.dart';
 import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -25,7 +29,7 @@ class MapView extends StatefulWidget {
 }
 
 class _MapViewState extends State<MapView> {
-  CameraPosition _initialLocation = CameraPosition(target: LatLng(0.0, 0.0));
+  CameraPosition _initialLocation = CameraPosition(target: LatLng(-6.1747525534221595, 106.82719276918434));
   late GoogleMapController mapController;
 
   final startAddressController = TextEditingController();
@@ -43,6 +47,8 @@ class _MapViewState extends State<MapView> {
   ScrollController _scrollController = ScrollController();
 
   late MapService _mapService;
+
+  bool _showRouteBottomSection = false;
 
   @override
   void initState() {
@@ -248,6 +254,7 @@ class _MapViewState extends State<MapView> {
       setState(() {
         _placeDistance = totalDistance.toStringAsFixed(2);
         print('DISTANCE: $_placeDistance km');
+        _showRouteBottomSection = true;
       });
 
       return true;
@@ -285,6 +292,11 @@ class _MapViewState extends State<MapView> {
       });
     }
 
+    print("GAJELAS");
+    print(result.errorMessage);
+    print(result.points);
+    print(result.status);
+    
     PolylineId id = PolylineId('poly');
     Polyline polyline = Polyline(
       polylineId: id,
@@ -547,68 +559,119 @@ class _MapViewState extends State<MapView> {
                 alignment: Alignment.bottomRight,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
-                      child: ClipOval(
-                        child: Material(
-                          color: Colors.blue.shade100,
-                          child: InkWell(
-                            splashColor: Colors.blue,
-                            child: SizedBox(
-                              width: 56,
-                              height: 56,
-                              child: Icon(Icons.traffic),
+                  children: _showRouteBottomSection
+                      ? [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0, bottom: 100.0),
+                            child: ClipOval(
+                              child: Material(
+                                color: Colors.red,
+                                child: InkWell(
+                                  splashColor: Colors.red,
+                                  child: SizedBox(
+                                    width: 65,
+                                    height: 65,
+                                    child: Icon(Icons.sos, color: Colors.white),
+                                  ),
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return KondisiDialog();
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
-                            onTap: () {
-                              //ramai
-                            },
                           ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
-                      child: ClipOval(
-                        child: Material(
-                          color: Colors.green.shade100,
-                          child: InkWell(
-                            splashColor: Colors.green,
-                            child: SizedBox(
-                              width: 56,
-                              height: 56,
-                              child: Icon(Icons.cloud),
+                        ]
+                      : [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
+                            child: ClipOval(
+                              child: Material(
+                                color: Colors.orange.shade100,
+                                child: InkWell(
+                                  splashColor: Colors.orange,
+                                  child: SizedBox(
+                                    width: 45,
+                                    height: 45,
+                                    child: Icon(Icons.traffic),
+                                  ),
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return KondisiDialog();
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
-                            onTap: () {
-                              //cuaca
-                            },
                           ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10.0, bottom: 150.0),
-                      child: ClipOval(
-                        child: Material(
-                          color: Colors.orange.shade100,
-                          child: InkWell(
-                            splashColor: Colors.orange,
-                            child: SizedBox(
-                              width: 56,
-                              height: 56,
-                              child: Icon(Icons.wifi),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
+                            child: ClipOval(
+                              child: Material(
+                                color: Colors.orange.shade100,
+                                child: InkWell(
+                                  splashColor: Colors.orange,
+                                  child: SizedBox(
+                                    width: 45,
+                                    height: 45,
+                                    child: Icon(Icons.cloud, color: Colors.white),
+                                  ),
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return CuacaDialog();
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
-                            onTap: () {
-                              //pairing
-                            },
                           ),
-                        ),
-                      ),
-                    ),
-                  ],
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0, bottom: 160.0),
+                            child: ClipOval(
+                              child: Material(
+                                color: AppColors.primaryColor,
+                                child: InkWell(
+                                  splashColor: AppColors.primaryColor,
+                                  child: SizedBox(
+                                    width: 65,
+                                    height: 65,
+                                    child: Icon(Icons.wifi, color: Colors.white),
+                                  ),
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AksesTemanDialog();
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                 ),
               ),
             ),
+            if (_showRouteBottomSection)
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: RouteBottomSection(
+                  placeDistance: _placeDistance,
+                  destination: _destinationAddress,
+                ),
+              )
+            else
             BottomPlaceInfo(
               onStartJourney: () async {
                 if (_startAddress != '' && _destinationAddress != '') {

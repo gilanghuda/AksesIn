@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:aksesin/presentation/widget/button.dart'; 
 
 class BottomPlaceInfo extends StatelessWidget {
   final Function onStartJourney;
@@ -26,14 +27,14 @@ class BottomPlaceInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                destinationAddress, // Use destinationAddress parameter
+                destinationAddress, 
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(height: 10),
-              Text('${placeDistance ?? '0.0'} km'), // Use placeDistance parameter
+              Text('${placeDistance ?? '0.0'} km'), 
               Text(
                 'Ringkasan ulasan',
                 style: TextStyle(
@@ -105,24 +106,16 @@ class BottomPlaceInfo extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Center(
-                child: ElevatedButton(
+                child: CustomButton(
+                  text: 'Mulai Perjalanan',
                   onPressed: () {
                     Navigator.pop(context);
                     onStartJourney();
                   },
-                  child: Text(
-                    'Mulai Perjalanan'.toUpperCase(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
+                  backgroundColor: Colors.blue,
+                  textColor: Colors.white,
+                  fontSize: 20.0,
+                  borderRadius: 20.0,
                 ),
               ),
             ],
@@ -151,7 +144,7 @@ class BottomPlaceInfo extends StatelessWidget {
             ),
             child: Container(
               padding: EdgeInsets.all(10.0),
-              width: width, // Use full width
+              width: width, 
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
@@ -167,32 +160,24 @@ class BottomPlaceInfo extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    destinationAddress, // Use destinationAddress parameter
+                    destinationAddress, 
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: 10),
-                  Text('${placeDistance ?? '0.0'} km'), // Use placeDistance parameter
+                  Text('${placeDistance ?? '0.0'} km'), 
                   SizedBox(height: 20),
-                  ElevatedButton(
+                  CustomButton(
+                    text: 'Mulai Perjalanan'.toUpperCase(),
                     onPressed: () {
                       onStartJourney();
                     },
-                    child: Text(
-                      'Mulai Perjalanan'.toUpperCase(),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                    ),
+                    backgroundColor: Colors.blue,
+                    textColor: Colors.white,
+                    fontSize: 20.0,
+                    borderRadius: 20.0,
                   ),
                 ],
               ),

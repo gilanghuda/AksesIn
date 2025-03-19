@@ -15,6 +15,13 @@ import 'package:aksesin/presentation/view/home_page/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart'; 
 import 'package:aksesin/presentation/view/komunitas/comment_komunitas.dart';
+import 'package:provider/provider.dart';
+import 'package:aksesin/presentation/provider/auth_provider.dart' as aksesin_auth;
+
+Future<String> getDisabilityOption(BuildContext context) async {
+  final userProfile = await Provider.of<aksesin_auth.AuthProvider>(context, listen: false).getCurrentUserProfile();
+  return userProfile.disabilityOptions.contains('Pendamping') ? 'Pendamping' : 'User';
+}
 
 final GoRouter router = GoRouter(
   routes: [
@@ -25,7 +32,11 @@ final GoRouter router = GoRouter(
           future: SharedPreferences.getInstance(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(),
+              );
             } else {
               final prefs = snapshot.data as SharedPreferences;
               final bool? onboardingCompleted =
@@ -33,7 +44,21 @@ final GoRouter router = GoRouter(
               final user = FirebaseAuth.instance.currentUser;
               if (onboardingCompleted == true) {
                 if (user != null) {
-                  return const HomeScreen();
+                  return FutureBuilder(
+                    future: getDisabilityOption(context),
+                    builder: (context, userProfileSnapshot) {
+                      if (userProfileSnapshot.connectionState == ConnectionState.waiting) {
+                        return SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        final disabilityOption = userProfileSnapshot.data as String;
+                        return HomeScreen(isPendamping: disabilityOption == 'Pendamping');
+                      }
+                    },
+                  );
                 } else {
                   return const LoginScreen();
                 }
@@ -69,7 +94,23 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/home',
-      builder: (context, state) => const HomeScreen(),
+      builder: (context, state) {
+        return FutureBuilder(
+          future: getDisabilityOption(context),
+          builder: (context, userProfileSnapshot) {
+            if (userProfileSnapshot.connectionState == ConnectionState.waiting) {
+              return SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              final disabilityOption = userProfileSnapshot.data as String;
+              return HomeScreen(isPendamping: disabilityOption == 'Pendamping');
+            }
+          },
+        );
+      },
     ),
     GoRoute(
       path: '/onboarding',
