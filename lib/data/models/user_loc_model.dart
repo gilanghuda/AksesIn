@@ -5,20 +5,23 @@ class UserLocationModel extends UserLocation {
     required String userId,
     required double latitude,
     required double longitude,
+    this.sos = false,
   }) : super(
           userId: userId,
           latitude: latitude,
           longitude: longitude,
         );
 
+  final bool sos;
+
   factory UserLocationModel.fromJson(Map<String, dynamic> json) {
-    // Log the JSON data for debugging
     print('UserLocationModel.fromJson: $json');
 
     return UserLocationModel(
       userId: json['userId'] ?? '',
       latitude: json['latitude']?.toDouble() ?? 0.0,
       longitude: json['longitude']?.toDouble() ?? 0.0,
+      sos: json['sos'] ?? false, 
     );
   }
 
@@ -27,6 +30,7 @@ class UserLocationModel extends UserLocation {
       'userId': userId,
       'latitude': latitude,
       'longitude': longitude,
+      'sos': sos,
     };
   }
 }

@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:aksesin/presentation/view/akses_jalan_detail/route_bottom_section.dart';
 import 'package:geocoding/geocoding.dart'; 
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TrackTemanPage extends StatefulWidget {
   final String userId;
@@ -31,6 +32,7 @@ class _TrackTemanPageState extends State<TrackTemanPage> {
     super.initState();
     _trackUserById = Provider.of<TrackUserById>(context, listen: false);
     _startTracking();
+    _checkSosStatus();
   }
 
   Future<void> _startTracking() async {
@@ -39,6 +41,14 @@ class _TrackTemanPageState extends State<TrackTemanPage> {
     _locationSubscription = _trackUserById(userId).listen((UserLocation location) async {
       _updateLocation(LatLng(location.latitude, location.longitude));
       await _updateLocationName(location.latitude, location.longitude); 
+    });
+  }
+
+  Future<void> _checkSosStatus() async {
+    FirebaseFirestore.instance.collection('user_locations').doc(widget.userId).snapshots().listen((doc) {
+      if (doc.exists && doc.data()?['sos'] == true) {
+        context.go('/map', extra: _locationName);
+      }
     });
   }
 

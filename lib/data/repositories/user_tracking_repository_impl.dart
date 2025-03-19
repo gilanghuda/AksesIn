@@ -14,9 +14,9 @@ class UserTrackingRepositoryImpl implements UserTrackingRepository {
       userId: location.userId,
       latitude: location.latitude,
       longitude: location.longitude,
+      sos: (location as UserLocationModel).sos,
     ).toJson());
   }
-
 
   @override
   Stream<UserLocation> trackUserById(String userId) {
@@ -25,7 +25,7 @@ class UserTrackingRepositoryImpl implements UserTrackingRepository {
       if (data != null) {
         return UserLocationModel.fromJson(data);
       } else {
-        return UserLocationModel(userId: userId, latitude: 0.0, longitude: 0.0);
+        return UserLocationModel(userId: userId, latitude: 0.0, longitude: 0.0, sos: false);
       }
     });
   }

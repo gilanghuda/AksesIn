@@ -2,7 +2,7 @@ import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
-import 'package:aksesin/presentation/view/akses_jalan_detail/akses_jalan_detail.dart';
+import 'package:go_router/go_router.dart';
 
 class AksesJalanScreen extends StatefulWidget {
   const AksesJalanScreen({super.key});
@@ -63,12 +63,7 @@ class _AksesJalanScreenState extends State<AksesJalanScreen> {
                           Expanded(
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AksesJalanDetailScreen(location: ''),
-                                  ),
-                                );
+                                context.push('/akses-jalan-detail', extra: '');
                               },
                               child: AbsorbPointer(
                                 child: TextField(
@@ -77,12 +72,7 @@ class _AksesJalanScreenState extends State<AksesJalanScreen> {
                                     border: InputBorder.none,
                                   ),
                                   onSubmitted: (query) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AksesJalanDetailScreen(location: query),
-                                      ),
-                                    );
+                                    context.push('/akses-jalan-detail', extra: query);
                                   },
                                 ),
                               ),

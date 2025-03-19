@@ -8,6 +8,7 @@ import 'package:aksesin/presentation/view/akses_jalan_detail/akses_teman_dialog.
 import 'package:aksesin/presentation/view/akses_jalan_detail/cuaca_dialog.dart';
 import 'package:aksesin/presentation/view/akses_jalan_detail/kondisi_dialog.dart';
 import 'package:aksesin/presentation/view/akses_jalan_detail/route_bottom_section.dart';
+import 'package:aksesin/presentation/view/akses_jalan_detail/sos_dialog.dart';
 import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -18,11 +19,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MapView extends StatefulWidget {
   final String? destinationAddress;
+  final String? userId;
 
-  MapView({this.destinationAddress});
+  MapView({this.destinationAddress, this.userId});
 
   @override
   _MapViewState createState() => _MapViewState();
@@ -59,7 +63,9 @@ class _MapViewState extends State<MapView> {
     _mapService = MapService();
     _getCurrentLocation();
 
-    if (widget.destinationAddress != null) {
+    if (widget.userId != null) {
+      _setDestinationToUserLocation(widget.userId!);
+    } else if (widget.destinationAddress != null) {
       destinationAddressController.text = widget.destinationAddress!;
       _destinationAddress = widget.destinationAddress!;
     }
@@ -83,6 +89,22 @@ class _MapViewState extends State<MapView> {
         _showBottomSheet(context);
       } else if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
         _showBottomSheet(context);
+      }
+    });
+  }
+
+  Future<void> _setDestinationToUserLocation(String userId) async {
+    FirebaseFirestore.instance.collection('user_locations').doc(userId).snapshots().listen((doc) {
+      if (doc.exists) {
+        final data = doc.data();
+        if (data != null) {
+          final latitude = data['latitude'];
+          final longitude = data['longitude'];
+          setState(() {
+            _destinationAddress = '$latitude, $longitude';
+            destinationAddressController.text = _destinationAddress;
+          });
+        }
       }
     });
   }
@@ -417,10 +439,14 @@ class _MapViewState extends State<MapView> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    context.pop();
+                    try {
+                      context.pop();
+                    } catch (e) {
+                        context.go('/home');
+                    }
                   },
                   child: Text(
-                    'Mulai Perjalanan'.toUpperCase(),
+                    'Mulai Perjalanan',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
@@ -495,7 +521,11 @@ class _MapViewState extends State<MapView> {
                             child: IconButton(
                               icon: Icon(Icons.arrow_back),
                               onPressed: () {
-                                context.pop();
+                                try {
+                                  context.pop();
+                                } catch (e) {
+                                    context.go('/home'); 
+                                }
                               },
                             ),
                           ),
@@ -587,13 +617,19 @@ class _MapViewState extends State<MapView> {
                                     height: 65,
                                     child: Icon(Icons.sos, color: Colors.white),
                                   ),
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return KondisiDialog();
-                                      },
-                                    );
+                                  onTap: () async {
+                                    final user = FirebaseAuth.instance.currentUser;
+                                    if (user != null) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          print("INI USER ID : ${user.uid}");
+                                          return SosDialog(userId: user.uid, status: true);
+                                        },
+                                      );
+                                    } else {
+                                      print("KALO MASIH NULL KOCAK SIH.");
+                                    }
                                   },
                                 ),
                               ),
