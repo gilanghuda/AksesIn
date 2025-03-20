@@ -6,6 +6,7 @@ import 'package:aksesin/presentation/view/auth1.dart';
 import 'package:aksesin/presentation/view/auth_view/dissability_screen.dart';
 import 'package:aksesin/presentation/view/komunitas/komunitas_screen.dart';
 import 'package:aksesin/presentation/view/komunitas/post_komunitas_screen.dart';
+import 'package:aksesin/presentation/view/notification/notification_screen.dart';
 import 'package:aksesin/presentation/view/onboarding1.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -20,6 +21,7 @@ import 'package:aksesin/presentation/provider/auth_provider.dart' as aksesin_aut
 import 'package:aksesin/presentation/view/pendamping_page/track_teman.dart';
 import 'package:aksesin/presentation/view/pendamping_page/akses_teman.dart';
 import 'package:aksesin/presentation/view/akses_jalan_detail/akses_jalan_detail.dart';
+
 
 Future<String> getDisabilityOption(BuildContext context) async {
   final userProfile = await Provider.of<aksesin_auth.AuthProvider>(context, listen: false).getCurrentUserProfile();
@@ -36,8 +38,8 @@ final GoRouter router = GoRouter(
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return SizedBox(
-                width: 24,
-                height: 24,
+                width: 16, 
+                height: 16, 
                 child: CircularProgressIndicator(),
               );
             } else {
@@ -52,8 +54,8 @@ final GoRouter router = GoRouter(
                     builder: (context, userProfileSnapshot) {
                       if (userProfileSnapshot.connectionState == ConnectionState.waiting) {
                         return SizedBox(
-                          width: 24,
-                          height: 24,
+                          width: 16, 
+                          height: 16,
                           child: CircularProgressIndicator(),
                         );
                       } else {
@@ -102,7 +104,7 @@ final GoRouter router = GoRouter(
           future: getDisabilityOption(context),
           builder: (context, userProfileSnapshot) {
             if (userProfileSnapshot.connectionState == ConnectionState.waiting) {
-              return SizedBox(
+              return SizedBox(            
                 width: 24,
                 height: 24,
                 child: CircularProgressIndicator(),
@@ -153,8 +155,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/map',
       builder: (context, state) {
-        final destinationAddress = state.extra as String?;
-        return MapView(destinationAddress: destinationAddress);
+        final params = state.extra as Map<String, dynamic>?;
+        final destinationAddress = params?['destinationAddress'] as String?;
+        final isSosReceived = params?['isSosReceived'] as bool? ?? false;
+        return MapView(destinationAddress: destinationAddress, isSosReceived: isSosReceived);
       },
     ),
     GoRoute(
@@ -174,6 +178,10 @@ final GoRouter router = GoRouter(
         final location = state.extra as String? ?? '';
         return AksesJalanDetailScreen(location: location);
       },
+    ),
+    GoRoute(
+      path: '/notifikasi',
+      builder: (context, state) => const NotificationScreen(),
     ),
   ],
 );

@@ -1,6 +1,7 @@
 import 'package:aksesin/data/models/user_model.dart';
 import 'package:aksesin/presentation/view/auth_view/disability_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; 
 import 'package:flutter/material.dart';
@@ -182,10 +183,11 @@ class FirebaseAuthService {
     });
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     try {
       await _auth.signOut();
       await _googleSignIn.signOut();
+      context.go('/');
     } catch (e) {
       throw Exception('Failed to sign out: $e');
     }

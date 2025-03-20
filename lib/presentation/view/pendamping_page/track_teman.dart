@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:aksesin/domain/entities/user_loc.dart';
+import 'package:aksesin/presentation/view/pendamping_page/sos_diterima_dialog.dart';
 import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -26,6 +27,7 @@ class _TrackTemanPageState extends State<TrackTemanPage> {
   StreamSubscription<UserLocation>? _locationSubscription;
   late TrackUserById _trackUserById;
   String? _locationName; 
+  bool _isSosDialogOpen = false; 
 
   @override
   void initState() {
@@ -47,7 +49,22 @@ class _TrackTemanPageState extends State<TrackTemanPage> {
   Future<void> _checkSosStatus() async {
     FirebaseFirestore.instance.collection('user_locations').doc(widget.userId).snapshots().listen((doc) {
       if (doc.exists && doc.data()?['sos'] == true) {
-        context.go('/map', extra: _locationName);
+        if (!_isSosDialogOpen) {
+          _isSosDialogOpen = true;
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return SosDiterimaDialog(locationName: _locationName);
+            },
+          ).then((_) {
+            _isSosDialogOpen = false;
+          });
+        }
+      } else {
+        if (_isSosDialogOpen) {
+          Navigator.of(context, rootNavigator: true).pop();
+          _isSosDialogOpen = false;
+        }
       }
     });
   }

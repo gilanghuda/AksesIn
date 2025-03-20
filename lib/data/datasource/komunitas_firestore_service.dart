@@ -54,6 +54,7 @@ class KomunitasFirestoreService {
     });
   }
 
+
   Stream<List<KomunitasModel>> getKomunitas() {
     return _komunitasCollection.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => KomunitasModel.fromMap(doc.data() as Map<String, dynamic>)).toList();

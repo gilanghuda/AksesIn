@@ -1,5 +1,7 @@
 import 'package:aksesin/data/models/user_model.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
+import 'package:aksesin/presentation/provider/notification_provider.dart';
+import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -87,10 +89,12 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
+        backgroundColor: AppColors.primaryColor,
         onPressed: () {
           context.push('/post-komunitas');
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -190,10 +194,17 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
   }
 
   void _updateLikes(String komunitasId, int newLikesCount, String userId, {bool unlike = false}) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final userProfile = await authProvider.getCurrentUserProfile();
+    final userName = userProfile.username;
+    final komunitasDoc = await FirebaseFirestore.instance.collection('komunitas').doc(komunitasId).get();
+    final content = komunitasDoc['content'];
+
     if (unlike) {
       await Provider.of<KomunitasProvider>(context, listen: false).unlikeKomunitas(komunitasId, newLikesCount, userId);
     } else {
       await Provider.of<KomunitasProvider>(context, listen: false).updateLikes(komunitasId, newLikesCount, userId);
+      await Provider.of<NotificationProvider>(context, listen: false).addNotification(userId, userName, 'menyukai postingan Anda', content);
     }
     setState(() {});
   }

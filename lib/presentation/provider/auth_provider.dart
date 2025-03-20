@@ -76,8 +76,10 @@ class AuthProvider with ChangeNotifier {
     _setLoading(true);
     _clearError();
     try {
-      await authService.signOut();
-        context.go('/');
+      await authService.signOut(context);
+      if (context.mounted) {
+        context.go('/login');
+      }
     } catch (e) {
       _setError(e.toString());
     } finally {

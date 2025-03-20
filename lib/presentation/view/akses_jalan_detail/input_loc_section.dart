@@ -44,7 +44,7 @@ class InputLocSection extends StatelessWidget {
           ),
           child: TextField(
             onSubmitted: (value) {
-              context.push('/map', extra: value);
+              context.push('/map', extra: {'destinationAddress': value, 'isSosReceived': false});
             },
             decoration: InputDecoration(
               hintText: 'Cari Lokasi',

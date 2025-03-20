@@ -78,7 +78,7 @@ class _BerandaScreenState extends State<BerandaScreen> {
                             height: 24, 
                           ),
                           onPressed: () {
-                            context.go('/akses-jalan-detail');
+                            context.push('/akses-jalan-detail');
                           },
                           backgroundColor: Colors.white,
                           textColor: Colors.black,

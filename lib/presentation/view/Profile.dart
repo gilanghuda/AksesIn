@@ -1,4 +1,5 @@
 import 'package:aksesin/presentation/provider/auth_provider.dart';
+import 'package:aksesin/presentation/view/logout_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -282,9 +283,13 @@ class _ProfileState extends State<Profile> {
                           height:
                               90), // Add more whitespace between "Keluar" button and Riwayat Perjalanan
                       ElevatedButton(
-                        onPressed: () async {
-                          final authProvider = Provider.of<AuthProvider>(context, listen: false);
-                          await authProvider.logout(context);
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return LogoutDialog();
+                            },
+                          );
                         },
                         child: Text('Keluar',
                             style: TextStyle(color: Color(0xFF0064D1))),

@@ -21,9 +21,17 @@ class _SearchPostSectionState extends State<SearchPostSection> {
       children: [
         SizedBox(height: 90),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Komunitas',
-            style : TextStyle(color: Colors.white, fontSize: 36),
+            Text(
+              'Komunitas',
+              style: TextStyle(color: Colors.white, fontSize: 36),
+            ),
+            IconButton(
+              icon: Icon(Icons.notifications, color: Colors.white),
+              onPressed: () {
+                context.push('/notifikasi');
+              },
             ),
           ],
         ),
@@ -67,38 +75,40 @@ class _SearchPostSectionState extends State<SearchPostSection> {
 
   void _showFilterDialog(BuildContext context) {
     _tempSelectedCategories = List.from(_selectedCategories); 
-    showDialog(
+    showModalBottomSheet(
       context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+      ),
       builder: (BuildContext context) {
-        return AlertDialog(
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0), 
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton(
-                child: Text('Batal'),
-                onPressed: () {
-                  context.pop();
-                },
-              ),
-              Text('Filter', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              TextButton(
-                child: Text('Terapkan'),
-                onPressed: () {
-                  setState(() {
-                    _selectedCategories = List.from(_tempSelectedCategories);
-                  });
-                  widget.onCategorySelected(_selectedCategories.join(', '));
-                  context.pop();
-                },
-              ),
-            ],
-          ),
-          content: Column(
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    child: Text('Batal'),
+                    onPressed: () {
+                      context.pop();
+                    },
+                  ),
+                  Text('Filter', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  TextButton(
+                    child: Text('Terapkan'),
+                    onPressed: () {
+                      setState(() {
+                        _selectedCategories = List.from(_tempSelectedCategories);
+                      });
+                      widget.onCategorySelected(_selectedCategories.join(', '));
+                      context.pop();
+                    },
+                  ),
+                ],
+              ),
               Text('Kategori'),
               Wrap(
                 spacing: 8.0,

@@ -84,8 +84,8 @@ class KomunitasRepositoryImpl implements KomunitasRepository {
   }
 
   @override
-  Future<void> addComment(String komunitasId, String comment) {
-    return _firestoreService.addComment(komunitasId, comment);
+  Future<void> addComment(String komunitasId, String comment) async {
+    await _firestoreService.addComment(komunitasId, comment);
   }
 
   @override

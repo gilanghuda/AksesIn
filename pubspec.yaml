@@ -57,6 +57,7 @@ dependencies:
   location: ^8.0.0
   google_maps_routes: ^1.1.2
   google_maps_webservice: ^0.0.20-nullsafety.5
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:

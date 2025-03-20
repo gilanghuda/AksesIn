@@ -25,8 +25,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 class MapView extends StatefulWidget {
   final String? destinationAddress;
   final String? userId;
+  final bool isSosReceived; 
 
-  MapView({this.destinationAddress, this.userId});
+  MapView({this.destinationAddress, this.userId, this.isSosReceived = false}); 
 
   @override
   _MapViewState createState() => _MapViewState();
@@ -84,13 +85,6 @@ class _MapViewState extends State<MapView> {
       _getAddress();
     });
 
-    _scrollController.addListener(() {
-      if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
-        _showBottomSheet(context);
-      } else if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
-        _showBottomSheet(context);
-      }
-    });
   }
 
   Future<void> _setDestinationToUserLocation(String userId) async {
@@ -145,7 +139,7 @@ class _MapViewState extends State<MapView> {
               Radius.circular(10.0),
             ),
             borderSide: BorderSide(
-              color: Colors.grey.shade400,
+              color: Colors.grey.shade400, 
               width: 2,
             ),
           ),
@@ -154,7 +148,7 @@ class _MapViewState extends State<MapView> {
               Radius.circular(10.0),
             ),
             borderSide: BorderSide(
-              color: Colors.blue.shade300,
+              color:  Colors.blue.shade300, 
               width: 2,
             ),
           ),
@@ -327,11 +321,6 @@ class _MapViewState extends State<MapView> {
         Provider.of<MapsProvider>(context, listen: false).polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     }
-
-    print("GAJELAS");
-    print(result.errorMessage);
-    print(result.points);
-    print(result.status);
     
     PolylineId id = PolylineId('poly');
     Polyline polyline = Polyline(
@@ -341,130 +330,6 @@ class _MapViewState extends State<MapView> {
       width: 3,
     );
     Provider.of<MapsProvider>(context, listen: false).addPolyline(polyline);
-  }
-
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-      ),
-      builder: (BuildContext context) {
-        return Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                _destinationAddress,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10),
-              Text('$_placeDistance km'),
-              Text(
-                'Ringkasan ulasan',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Icon(Icons.sentiment_very_satisfied, color: Colors.green),
-                      Text('Sangat Baik'),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Icon(Icons.sentiment_satisfied, color: Colors.lightGreen),
-                      Text('Baik'),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Icon(Icons.sentiment_neutral, color: Colors.amber),
-                      Text('Buruk'),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Icon(Icons.sentiment_very_dissatisfied, color: Colors.red),
-                      Text('Sangat Buruk'),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundColor: Colors.grey.shade200,
-                    child: Icon(Icons.person, color: Colors.black),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      'Ahmad Kiran\nPetunjuk arah yang diberikan sangat jelas dan akurat. Sebagai pengguna kursi roda saya merasa perjalanan jauh lebih mudah dan aman.',
-                      style: TextStyle(fontSize: 14.0),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundColor: Colors.grey.shade200,
-                    child: Icon(Icons.person, color: Colors.black),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      'Viviane Angeli\nSebagai tunanetra, saya sangat terbantu. Rute yang direkomendasikan juga mempertimbangkan jalur yang aman dan mudah dilalui. Keren!',
-                      style: TextStyle(fontSize: 14.0),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    try {
-                      context.pop();
-                    } catch (e) {
-                        context.go('/home');
-                    }
-                  },
-                  child: Text(
-                    'Mulai Perjalanan',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -498,7 +363,7 @@ class _MapViewState extends State<MapView> {
                 child: Container(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: AppColors.secondaryColor,
+                      color: widget.isSosReceived ? Colors.red : AppColors.secondaryColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(10.0),
                       ),
@@ -578,6 +443,18 @@ class _MapViewState extends State<MapView> {
                                   label: 'Tujuan anda',
                                   hint: 'Choose destination',
                                   prefixIcon: Icon(Icons.looks_two),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(Icons.swap_vert),
+                                    onPressed: () {
+                                      setState(() {
+                                        String temp = startAddressController.text;
+                                        startAddressController.text = destinationAddressController.text;
+                                        destinationAddressController.text = temp;
+                                        _startAddress = startAddressController.text;
+                                        _destinationAddress = destinationAddressController.text;
+                                      });
+                                    },
+                                  ),
                                   controller: destinationAddressController,
                                   focusNode: destinationAddressFocusNode,
                                   width: width,
@@ -751,6 +628,7 @@ class _MapViewState extends State<MapView> {
               },
               destinationAddress: _destinationAddress,
               placeDistance: _placeDistance,
+              isSosReceived: widget.isSosReceived,
             ),
           ],
         ),

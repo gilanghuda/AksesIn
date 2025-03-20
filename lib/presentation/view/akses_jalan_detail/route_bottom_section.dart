@@ -1,5 +1,6 @@
+import 'package:aksesin/presentation/view/akses_jalan_detail/ulasan_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
 
 class RouteBottomSection extends StatelessWidget {
   final String? placeDistance;
@@ -52,7 +53,12 @@ class RouteBottomSection extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  context.pop();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return UlasanDialog();
+                    },
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,

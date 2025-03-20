@@ -5,11 +5,13 @@ class BottomPlaceInfo extends StatelessWidget {
   final Function onStartJourney;
   final String destinationAddress;
   final String? placeDistance;
+  final bool isSosReceived;
 
   BottomPlaceInfo({
     required this.onStartJourney,
     required this.destinationAddress,
     required this.placeDistance,
+    required this.isSosReceived,
   });
 
   void _showBottomSheet(BuildContext context) {
@@ -107,12 +109,12 @@ class BottomPlaceInfo extends StatelessWidget {
               SizedBox(height: 20),
               Center(
                 child: CustomButton(
-                  text: 'Mulai Perjalanan',
+                  text: 'Mulai perjalanan',
                   onPressed: () {
                     Navigator.pop(context);
                     onStartJourney();
                   },
-                  backgroundColor: Colors.blue,
+                  backgroundColor: isSosReceived ? Colors.red : Colors.blue,
                   textColor: Colors.white,
                   fontSize: 20.0,
                   borderRadius: 20.0,
@@ -170,11 +172,11 @@ class BottomPlaceInfo extends StatelessWidget {
                   Text('${placeDistance ?? '0.0'} km'), 
                   SizedBox(height: 20),
                   CustomButton(
-                    text: 'Mulai Perjalanan'.toUpperCase(),
+                    text: 'Mulai Perjalanan',
                     onPressed: () {
                       onStartJourney();
                     },
-                    backgroundColor: Colors.blue,
+                    backgroundColor:  isSosReceived ? Colors.red : Colors.blue,
                     textColor: Colors.white,
                     fontSize: 20.0,
                     borderRadius: 20.0,

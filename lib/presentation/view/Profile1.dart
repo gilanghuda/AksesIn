@@ -286,54 +286,6 @@ class _ProfileState1 extends State<Profile1> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Color(0xFFFFFAFA), // Change background color to FFFAFA
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, -3), // Shadow above the footer
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Color(0xFFFFFAFA),
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.explore, size: 30), // Increase icon size
-              label: 'AksesJalan',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat, size: 30), // Increase icon size
-              label: 'AksesKomun',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 30), // Increase icon size
-              label: 'Profil',
-            ),
-          ],
-          currentIndex: currentIndex,
-          selectedItemColor:
-              Color(0xFF0064D1), // Change selected item color to 0064D1
-          unselectedItemColor: Colors.grey,
-          onTap: (index) {
-            setState(() {
-              // Update the current index to change the selected item
-              currentIndex = index;
-            });
-          },
-          selectedLabelStyle: TextStyle(
-            color: Color(0xFF0064D1),
-            fontSize: 16, // Increase label font size
-          ),
-          unselectedLabelStyle: TextStyle(
-            color: Colors.grey,
-            fontSize: 14, // Increase label font size
-          ),
-        ),
-      ),
     );
   }
 }

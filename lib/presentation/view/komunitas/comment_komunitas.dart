@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../provider/komunitas_provider.dart';
+import '../../provider/notification_provider.dart';
 
 class CommentKomunitas extends StatefulWidget {
   final String komunitasId;
@@ -43,8 +45,19 @@ class _CommentKomunitasState extends State<CommentKomunitas> {
                   return ListView.builder(
                     itemCount: comments.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(comments[index]),
+                      final parts = comments[index].split(':');
+                      final username = parts[0];
+                      final commentContent = parts.length > 1 ? parts[1] : '';
+
+                      return Card(
+                        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            child: Text(username[0]),
+                          ),
+                          title: Text(username),
+                          subtitle: Text(commentContent),
+                        ),
                       );
                     },
                   );
@@ -73,6 +86,13 @@ class _CommentKomunitasState extends State<CommentKomunitas> {
                       String displayName = user?.displayName ?? 'Anonymous';
                       String comment = '$displayName: ${_commentController.text}';
                       await Provider.of<KomunitasProvider>(context, listen: false).addComment(widget.komunitasId, comment);
+                      
+                  
+                      final komunitasDoc = await FirebaseFirestore.instance.collection('komunitas').doc(widget.komunitasId).get();
+                      await Provider.of<NotificationProvider>(context, listen: false).addNotification(
+                        komunitasDoc['userId'], displayName, 'mengomentari postingan Anda', comment,
+                      );
+
                       _commentController.clear();
                       setState(() {});
                     }
