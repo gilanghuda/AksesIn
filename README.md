@@ -1,16 +1,7 @@
 # aksesin
+![Cover](assets/images/Mockup Poster.png)
 
-A new Flutter project.
+AksesIn adalah aplikasi inovatif yang membantu penyandang disabilitas dalam mengakses ruang publik dengan lebih aman dan nyaman. Aplikasi ini menyediakan navigasi rute ramah disabilitas, pelacakan lokasi untuk pendamping, serta forum komunitas untuk berbagi informasi. Dengan fitur-fitur ini, AksesIn bertujuan untuk meningkatkan kemandirian, keamanan, dan kenyamanan bagi penyandang disabilitas serta memberikan ketenangan bagi pendamping mereka.
 
-## Getting Started
+dipersiapkan oleh Raion internship kelompok 12
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
