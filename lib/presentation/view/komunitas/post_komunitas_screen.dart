@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:uuid/uuid.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class PostKomunitasScreen extends StatefulWidget {
   @override
@@ -28,6 +30,33 @@ class _PostKomunitasScreenState extends State<PostKomunitasScreen> {
     setState(() {
       _images = pickedImages;
     });
+  }
+
+  Future<List<String>> _uploadImagesToCloudinary(List<XFile> images) async {
+    List<String> imageUrls = [];
+    for (var image in images) {
+      final request = http.MultipartRequest('POST', Uri.parse('https://api.cloudinary.com/v1_1/dyejedtcq/upload'));
+      request.fields['upload_preset'] = 'aksesin';
+      request.files.add(await http.MultipartFile.fromPath('file', image.path));
+      try {
+        final response = await request.send();
+        print('Response status: ${response.statusCode}');
+        if (response.statusCode == 200) {
+          final responseData = await response.stream.bytesToString();
+          final jsonResponse = json.decode(responseData);
+          print('Response data: $jsonResponse');
+          imageUrls.add(jsonResponse['secure_url']);
+        } else {
+          final responseData = await response.stream.bytesToString();
+          print('Error response data: $responseData');
+          throw Exception('Failed to upload image');
+        }
+      } catch (e) {
+        print('Exception: $e');
+        throw Exception('Failed to upload image: $e');
+      }
+    }
+    return imageUrls;
   }
 
   @override
@@ -54,7 +83,10 @@ class _PostKomunitasScreenState extends State<PostKomunitasScreen> {
                         UserModel user = await authProvider.getCurrentUserProfile();
                         _postKomunitas(user);
                       },
-                child: Text('Posting'),
+                child: Text(
+                  'Posting',
+                  style: TextStyle(fontFamily: 'Montserrat'),
+                ),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white, backgroundColor: _contentController.text.isEmpty ? Colors.grey : Colors.blue,
                 ),
@@ -72,9 +104,19 @@ class _PostKomunitasScreenState extends State<PostKomunitasScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(
+              child: Text(
+                'Error: ${snapshot.error}',
+                style: TextStyle(fontFamily: 'Montserrat'),
+              ),
+            );
           } else if (!snapshot.hasData) {
-            return Center(child: Text('No user data found.'));
+            return Center(
+              child: Text(
+                'No user data found.',
+                style: TextStyle(fontFamily: 'Montserrat'),
+              ),
+            );
           } else {
             UserModel user = snapshot.data!;
             return Padding(
@@ -86,14 +128,22 @@ class _PostKomunitasScreenState extends State<PostKomunitasScreen> {
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(user.photoUrl!),
+                          backgroundImage: user.photoUrl != null 
+                              ? NetworkImage(user.photoUrl!) 
+                              : null,
+                          child: user.photoUrl == null 
+                              ? Icon(Icons.account_circle, size: 40) 
+                              : null,
                           radius: 20,
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: TextFormField(
                             controller: _contentController,
-                            decoration: InputDecoration(hintText: 'Ketik di sini...'),
+                            decoration: InputDecoration(
+                              hintText: 'Ketik di sini...',
+                              hintStyle: TextStyle(fontFamily: 'Montserrat'),
+                            ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Konten tidak boleh kosong';
@@ -119,10 +169,12 @@ class _PostKomunitasScreenState extends State<PostKomunitasScreen> {
                       onPressed: _pickImages,
                     ),
                     Spacer(),
-                    if (_errorMessage != null)
+                    if (_isLoading)
+                      CircularProgressIndicator()
+                    else if (_errorMessage != null)
                       Text(
                         _errorMessage!,
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: Colors.red, fontFamily: 'Montserrat'),
                       ),
                   ],
                 ),
@@ -145,6 +197,18 @@ class _PostKomunitasScreenState extends State<PostKomunitasScreen> {
     final content = _contentController.text;
 
     try {
+      List<String>? imageUrls;
+      if (_images != null && _images!.isNotEmpty) {
+        print("MASUK SINI GA");
+        setState(() {
+          _isLoading = true;
+        });
+        imageUrls = await _uploadImagesToCloudinary(_images!);
+        setState(() {
+          _isLoading = false;
+        });
+      }
+
       final komunitas = Komunitas(
         id: _uuid.v4(),
         userId: user.id,
@@ -152,12 +216,11 @@ class _PostKomunitasScreenState extends State<PostKomunitasScreen> {
         content: content,
         createdAt: DateTime.now(),
         commentText: [],
-        images: _images?.map((image) => image.path).toList(),
-        userProfileImage: user.photoUrl,
-        category: user.disabilityOptions.join(', '),
+        images: imageUrls,
+        userProfileImage: user.photoUrl ?? '',
+        category: user.disabilityOptions?.join(', ') ?? '',
         likedBy: [], 
       );
-
       await Provider.of<KomunitasProvider>(context, listen: false).addNewKomunitas(komunitas);
       context.pop('/komunitas');
     } catch (e) {

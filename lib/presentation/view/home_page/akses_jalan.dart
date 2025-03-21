@@ -40,6 +40,7 @@ class _AksesJalanScreenState extends State<AksesJalanScreen> {
                       'Halo, $displayName 👋',
                       style: AppTextStyles.bodyText.copyWith(
                         color: Colors.white,
+                        fontFamily: 'Montserrat', // Apply Montserrat font
                       ),
                     ),
                     SizedBox(height: 8),
@@ -47,6 +48,7 @@ class _AksesJalanScreenState extends State<AksesJalanScreen> {
                       'Mau kemana hari ini?',
                       style: AppTextStyles.heading1.copyWith(
                         color: Colors.white,
+                        fontFamily: 'Montserrat', // Apply Montserrat font
                       ),
                     ),
                     SizedBox(height: 16),
@@ -70,6 +72,9 @@ class _AksesJalanScreenState extends State<AksesJalanScreen> {
                                   decoration: InputDecoration(
                                     hintText: 'Cari Lokasi',
                                     border: InputBorder.none,
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Montserrat', // Apply Montserrat font
+                                    ),
                                   ),
                                   onSubmitted: (query) {
                                     context.push('/akses-jalan-detail', extra: query);

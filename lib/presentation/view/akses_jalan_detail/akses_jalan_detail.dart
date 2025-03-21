@@ -26,25 +26,25 @@ class AksesJalanDetailScreen extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.all(16),
               children: [
-                Text('Riwayat', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text('Riwayat', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Montserrat')),
                 ListTile(
-                  title: Text('Hyde Cafe (Rooftop Trix House)'),
-                  subtitle: Text('Jalan Terusan Cikampek, Penanggungan, Kota Malang'),
+                  title: Text('Hyde Cafe (Rooftop Trix House)', style: TextStyle(fontFamily: 'Montserrat')),
+                  subtitle: Text('Jalan Terusan Cikampek, Penanggungan, Kota Malang', style: TextStyle(fontFamily: 'Montserrat')),
                   trailing: Text('Buka - Tutup 22.00'),
                 ),
                 ListTile(
-                  title: Text('7 Seven Chicken'),
-                  subtitle: Text('Jalan Soekarno Hatta, Mojolangu, Kota Malang'),
+                  title: Text('7 Seven Chicken', style: TextStyle(fontFamily: 'Montserrat')),
+                  subtitle: Text('Jalan Soekarno Hatta, Mojolangu, Kota Malang', style: TextStyle(fontFamily: 'Montserrat')),
                   trailing: Text('Buka 24 jam'),
                 ),
                 ListTile(
-                  title: Text('Ubud Cottages Malang'),
-                  subtitle: Text('Jalan Bendungan Sigura-Gura Barat, Karangbesuki, Kota Malang'),
+                  title: Text('Ubud Cottages Malang', style: TextStyle(fontFamily: 'Montserrat')),
+                  subtitle: Text('Jalan Bendungan Sigura-Gura Barat, Karangbesuki, Kota Malang', style: TextStyle(fontFamily: 'Montserrat')),
                   trailing: Text('Buka'),
                 ),
                 ListTile(
-                  title: Text('Po Kang'),
-                  subtitle: Text('Jalan Bondowoso, Gadang Kasri, Kota Malang'),
+                  title: Text('Po Kang', style: TextStyle(fontFamily: 'Montserrat')),
+                  subtitle: Text('Jalan Bondowoso, Gadang Kasri, Kota Malang', style: TextStyle(fontFamily: 'Montserrat')),
                   trailing: Text('Buka'),
                 ),
               ],

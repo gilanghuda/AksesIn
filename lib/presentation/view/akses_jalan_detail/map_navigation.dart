@@ -613,13 +613,23 @@ class _MapViewState extends State<MapView> {
                     if (isCalculated) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Distance Calculated Sucessfully'),
+                          content: Text(
+                            'Distance Calculated Sucessfully',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
                         ),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Error Calculating Distance'),
+                          content: Text(
+                            'Error Calculating Distance',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
                         ),
                       );
                     }

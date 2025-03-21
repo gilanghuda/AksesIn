@@ -38,6 +38,7 @@ class RouteBottomSection extends StatelessWidget {
                   Text(
                     destination,
                     style: TextStyle(
+                      fontFamily: 'Montserrat',
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -45,6 +46,7 @@ class RouteBottomSection extends StatelessWidget {
                   Text(
                     placeDistance != null ? '$placeDistance km   17.19' : 'Calculating...',
                     style: TextStyle(
+                      fontFamily: 'Montserrat',
                       fontSize: 16.0,
                       color: Colors.grey,
                     ),
@@ -69,6 +71,7 @@ class RouteBottomSection extends StatelessWidget {
                 child: Text(
                   'Keluar',
                   style: TextStyle(
+                    fontFamily: 'Montserrat',
                     color: Colors.white,
                     fontSize: 16.0,
                   ),

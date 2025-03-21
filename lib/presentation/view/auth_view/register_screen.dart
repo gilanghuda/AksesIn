@@ -16,7 +16,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterpPageState extends State<RegisterScreen> {
-  bool _obscureText = true;
+  bool _obscureTextPassword = true;
+  bool _obscureTextConfirmPassword = true;
   final _emailController = TextEditingController();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -59,13 +60,17 @@ class _RegisterpPageState extends State<RegisterScreen> {
                 Text(
                   'Selamat Datang di Aksesin',
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.heading1,
+                  style: AppTextStyles.heading1.copyWith(
+                    fontFamily: 'Montserrat',
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   '"Mobilitas tanpa batas! Temukan jalur terbaik dan akses inklusif di sini."',
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.hintText,
+                  style: AppTextStyles.hintText.copyWith(
+                    fontFamily: 'Montserrat',
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Container(
@@ -79,12 +84,16 @@ class _RegisterpPageState extends State<RegisterScreen> {
                     children: [
                       Text(
                         'Sign Up',
-                        style: AppTextStyles.heading2,
+                        style: AppTextStyles.heading2.copyWith(
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'Email',
-                        style: AppTextStyles.bodyText,
+                        style: AppTextStyles.bodyText.copyWith(
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
                       const SizedBox(height: 4),
                       TextFormField(
@@ -112,7 +121,9 @@ class _RegisterpPageState extends State<RegisterScreen> {
                       const SizedBox(height: 8),
                       Text(
                         'Username',
-                        style: AppTextStyles.bodyText,
+                        style: AppTextStyles.bodyText.copyWith(
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
                       const SizedBox(height: 4),
                       TextFormField(
@@ -130,12 +141,14 @@ class _RegisterpPageState extends State<RegisterScreen> {
                       const SizedBox(height: 8),
                       Text(
                         'Password',
-                        style: AppTextStyles.bodyText,
+                        style: AppTextStyles.bodyText.copyWith(
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
                       const SizedBox(height: 4),
                       TextFormField(
                         controller: _passwordController,
-                        obscureText: _obscureText,
+                        obscureText: _obscureTextPassword,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: AppColors.backgroundColor,
@@ -146,11 +159,11 @@ class _RegisterpPageState extends State<RegisterScreen> {
                           prefixIcon: Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _obscureText ? Icons.visibility_off : Icons.visibility,
+                              _obscureTextPassword ? Icons.visibility_off : Icons.visibility,
                             ),
                             onPressed: () {
                               setState(() {
-                                _obscureText = !_obscureText;
+                                _obscureTextPassword = !_obscureTextPassword;
                               });
                             },
                           ),
@@ -168,12 +181,14 @@ class _RegisterpPageState extends State<RegisterScreen> {
                       SizedBox(height: 8),
                       Text(
                         'Konfirmasi password',
-                        style: AppTextStyles.bodyText,
+                        style: AppTextStyles.bodyText.copyWith(
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
                       const SizedBox(height: 4),
                       TextFormField(
                         controller: _confirmPasswordController,
-                        obscureText: _obscureText,
+                        obscureText: _obscureTextConfirmPassword,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: AppColors.backgroundColor,
@@ -184,11 +199,11 @@ class _RegisterpPageState extends State<RegisterScreen> {
                           prefixIcon: Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _obscureText ? Icons.visibility_off : Icons.visibility,
+                              _obscureTextConfirmPassword ? Icons.visibility_off : Icons.visibility,
                             ),
                             onPressed: () {
                               setState(() {
-                                _obscureText = !_obscureText;
+                                _obscureTextConfirmPassword = !_obscureTextConfirmPassword;
                               });
                             },
                           ),
@@ -241,14 +256,22 @@ class _RegisterpPageState extends State<RegisterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Sudah punya akun?'),
+                    Text(
+                      'Sudah punya akun?',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                      ),
+                    ),
                     TextButton(
                       onPressed: () {
                         context.go('/login');
                       },
                       child: Text(
                         'Log In',
-                        style: TextStyle(color: AppColors.primaryColor),
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
                     ),
                   ],

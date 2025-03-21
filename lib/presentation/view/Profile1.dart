@@ -105,6 +105,7 @@ class _ProfileState1 extends State<Profile1> {
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
+                    fontFamily: 'Montserrat', // Apply Montserrat font
                   ),
                 ),
               ),
@@ -165,6 +166,7 @@ class _ProfileState1 extends State<Profile1> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat', // Apply Montserrat font
                             ),
                           ),
                         ),
@@ -215,6 +217,7 @@ class _ProfileState1 extends State<Profile1> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat', // Apply Montserrat font
                             ),
                           ),
                         ),
@@ -265,6 +268,7 @@ class _ProfileState1 extends State<Profile1> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18, // Make the label bigger
+                              fontFamily: 'Montserrat', // Apply Montserrat font
                             ),
                           ),
                           style: ElevatedButton.styleFrom(

@@ -22,7 +22,10 @@ class _CommentKomunitasState extends State<CommentKomunitas> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Comments'),
+        title: Text(
+          'Comments',
+          style: TextStyle(fontFamily: 'Montserrat'),
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
@@ -37,9 +40,19 @@ class _CommentKomunitasState extends State<CommentKomunitas> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
+                  return Center(
+                    child: Text(
+                      'Error: ${snapshot.error}',
+                      style: TextStyle(fontFamily: 'Montserrat'),
+                    ),
+                  );
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text('No comments available'));
+                  return Center(
+                    child: Text(
+                      'No comments available',
+                      style: TextStyle(fontFamily: 'Montserrat'),
+                    ),
+                  );
                 } else {
                   final comments = snapshot.data!;
                   return ListView.builder(
@@ -55,8 +68,14 @@ class _CommentKomunitasState extends State<CommentKomunitas> {
                           leading: CircleAvatar(
                             child: Text(username[0]),
                           ),
-                          title: Text(username),
-                          subtitle: Text(commentContent),
+                          title: Text(
+                            username,
+                            style: TextStyle(fontFamily: 'Montserrat'),
+                          ),
+                          subtitle: Text(
+                            commentContent,
+                            style: TextStyle(fontFamily: 'Montserrat'),
+                          ),
                         ),
                       );
                     },
@@ -73,7 +92,7 @@ class _CommentKomunitasState extends State<CommentKomunitas> {
                   child: TextField(
                     controller: _commentController,
                     decoration: InputDecoration(
-                      labelText: 'Add a comment',
+                      labelText: ('Add a comment'),
                       border: OutlineInputBorder(),
                     ),
                   ),

@@ -58,10 +58,18 @@ dependencies:
   google_maps_routes: ^1.1.2
   google_maps_webservice: ^0.0.20-nullsafety.5
   intl: ^0.20.2
+  cloudinary_url_gen: ^1.0.0
+  cloudinary_flutter: ^1.0.0
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/launcher.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -18,7 +18,11 @@ class KondisiDialog extends StatelessWidget {
               children: [
                 Text(
                   'Kondisi',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 IconButton(
                   icon: Icon(Icons.close),
@@ -31,7 +35,11 @@ class KondisiDialog extends StatelessWidget {
             SizedBox(height: 20),
             Text(
               'Lalu lintas',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 10),
             Container(
@@ -44,13 +52,22 @@ class KondisiDialog extends StatelessWidget {
               children: [
                 Icon(Icons.accessibility, color: Colors.orange),
                 SizedBox(width: 10),
-                Text('Rute ramah disabilitas.'),
+                Text(
+                  'Rute ramah disabilitas.',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 20),
             Text(
               'Waktu populer: Sabtu',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 10),
             Container(

@@ -53,13 +53,13 @@ class _LoginPageState extends State<LoginScreen> {
                 Text(
                   'Selamat Datang di Aksesin',
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.heading1,
+                  style: AppTextStyles.heading1.copyWith(fontFamily: 'Montserrat'),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   '"Mobilitas tanpa batas! Temukan jalur terbaik dan akses inklusif di sini."',
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.hintText,
+                  style: AppTextStyles.hintText.copyWith(fontFamily: 'Montserrat'),
                 ),
                 const SizedBox(height: 15),
                 Container(
@@ -73,12 +73,12 @@ class _LoginPageState extends State<LoginScreen> {
                     children: [
                       Text(
                         'Log In',
-                        style: AppTextStyles.heading2,
+                        style: AppTextStyles.heading2.copyWith(fontFamily: 'Montserrat'),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'Email',
-                        style: AppTextStyles.bodyText,
+                        style: AppTextStyles.bodyText.copyWith(fontFamily: 'Montserrat'),
                       ),
                       const SizedBox(height: 4),
                       TextFormField(
@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginScreen> {
                       const SizedBox(height: 8),
                       Text(
                         'Password',
-                        style: AppTextStyles.bodyText,
+                        style: AppTextStyles.bodyText.copyWith(fontFamily: 'Montserrat'),
                       ),
                       const SizedBox(height: 4),
                       TextFormField(
@@ -140,7 +140,7 @@ class _LoginPageState extends State<LoginScreen> {
                           },
                           child: Text(
                             'Lupa Password?',
-                            style: TextStyle(color: AppColors.primaryColor),
+                            style: TextStyle(color: AppColors.primaryColor, fontFamily: 'Montserrat'),
                           ),
                         ),
                       ),
@@ -154,7 +154,7 @@ class _LoginPageState extends State<LoginScreen> {
                                   if (authProvider.errorMessage != null)
                                     Text(
                                       authProvider.errorMessage!,
-                                      style: TextStyle(color: Colors.red),
+                                      style: TextStyle(color: Colors.red, fontFamily: 'Montserrat'),
                                     ),
                                     Builder(
                                      builder: (context) {
@@ -187,14 +187,14 @@ class _LoginPageState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text('Belum punya akun?'),
+                          Text('Belum punya akun?', style: TextStyle(fontFamily: 'Montserrat')),
                           TextButton(
                             onPressed: () {
                               context.go('/dissability');
                             },
                             child: Text( 
                               'Sign Up', 
-                              style: TextStyle(color: AppColors.primaryColor),),
+                              style: TextStyle(color: AppColors.primaryColor, fontFamily: 'Montserrat'),),
                           ),
                         ],
                       ),
@@ -211,7 +211,7 @@ class _LoginPageState extends State<LoginScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
                           'atau',
-                          style: TextStyle(color: Colors.grey),
+                          style: TextStyle(color: Colors.grey, fontFamily: 'Montserrat'),
                         ),
                       ),
                       Expanded(child: Divider(color: Colors.grey)),
@@ -232,7 +232,7 @@ class _LoginPageState extends State<LoginScreen> {
                   ),
                   label: Text(
                     'Masuk dengan Google',
-                    style: TextStyle(color: AppColors.primaryColor),
+                    style: TextStyle(color: AppColors.primaryColor, fontFamily: 'Montserrat'),
                   ),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),

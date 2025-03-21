@@ -25,7 +25,7 @@ class _SearchPostSectionState extends State<SearchPostSection> {
           children: [
             Text(
               'Komunitas',
-              style: TextStyle(color: Colors.white, fontSize: 36),
+              style: TextStyle(color: Colors.white, fontSize: 36, fontFamily: 'Montserrat'),
             ),
             IconButton(
               icon: Icon(Icons.notifications, color: Colors.white),
@@ -51,6 +51,7 @@ class _SearchPostSectionState extends State<SearchPostSection> {
           child: TextField(
             decoration: InputDecoration(
               hintText: 'Cari Postingan',
+              hintStyle: TextStyle(fontFamily: 'Montserrat'),
               prefixIcon: IconButton(
                 icon: Icon(Icons.search_rounded),
                 onPressed: () {
@@ -91,14 +92,14 @@ class _SearchPostSectionState extends State<SearchPostSection> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    child: Text('Batal'),
+                    child: Text('Batal', style: TextStyle(fontFamily: 'Montserrat')),
                     onPressed: () {
                       context.pop();
                     },
                   ),
-                  Text('Filter', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text('Filter', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Montserrat')),
                   TextButton(
-                    child: Text('Terapkan'),
+                    child: Text('Terapkan', style: TextStyle(fontFamily: 'Montserrat')),
                     onPressed: () {
                       setState(() {
                         _selectedCategories = List.from(_tempSelectedCategories);
@@ -109,13 +110,13 @@ class _SearchPostSectionState extends State<SearchPostSection> {
                   ),
                 ],
               ),
-              Text('Kategori'),
+              Text('Kategori', style: TextStyle(fontFamily: 'Montserrat')),
               Wrap(
                 spacing: 8.0,
                 runSpacing: 4.0,
                 children: [
                   FilterChip(
-                    label: Text('Semua'),
+                    label: Text('Semua', style: TextStyle(fontFamily: 'Montserrat')),
                     selected: _tempSelectedCategories.contains('All'),
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
@@ -129,7 +130,7 @@ class _SearchPostSectionState extends State<SearchPostSection> {
                     },
                   ),
                   FilterChip(
-                    label: Text('Tuna Netra'),
+                    label: Text('Tuna Netra', style: TextStyle(fontFamily: 'Montserrat')),
                     selected: _tempSelectedCategories.contains('Tuna Netra'),
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
@@ -143,7 +144,7 @@ class _SearchPostSectionState extends State<SearchPostSection> {
                     },
                   ),
                   FilterChip(
-                    label: Text('Tunarungu / Wicara'),
+                    label: Text('Tunarungu / Wicara', style: TextStyle(fontFamily: 'Montserrat')),
                     selected: _tempSelectedCategories.contains('Tunarungu / Wicara'),
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
@@ -157,7 +158,7 @@ class _SearchPostSectionState extends State<SearchPostSection> {
                     },
                   ),
                   FilterChip(
-                    label: Text('Keterbatasan Fisik'),
+                    label: Text('Keterbatasan Fisik', style: TextStyle(fontFamily: 'Montserrat')),
                     selected: _tempSelectedCategories.contains('Keterbatasan Fisik'),
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {
@@ -171,7 +172,7 @@ class _SearchPostSectionState extends State<SearchPostSection> {
                     },
                   ),
                   FilterChip(
-                    label: Text('Pendamping'),
+                    label: Text('Pendamping', style: TextStyle(fontFamily: 'Montserrat')),
                     selected: _tempSelectedCategories.contains('Pendamping'),
                     selectedColor: Colors.blue,
                     onSelected: (bool value) {

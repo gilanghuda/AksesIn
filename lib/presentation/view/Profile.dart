@@ -73,6 +73,7 @@ class _ProfileState extends State<Profile> {
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.white, // Change color to black
+                      fontFamily: 'Montserrat', // Apply Montserrat font
                     ),
                   ),
                 ),
@@ -130,6 +131,7 @@ class _ProfileState extends State<Profile> {
                                 style: TextStyle(
                                   fontSize: 18, // Reduce font size
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat', // Apply Montserrat font
                                 ),
                               ),
                               Row(
@@ -147,6 +149,7 @@ class _ProfileState extends State<Profile> {
                                       fontSize: 14, // Reduce font size
                                       color: Color(
                                           0xFF666666), // Change color to 666666
+                                      fontFamily: 'Montserrat', // Apply Montserrat font
                                     ),
                                   ),
                                 ],
@@ -157,6 +160,7 @@ class _ProfileState extends State<Profile> {
                                   fontSize: 14, // Reduce font size
                                   color: Color(
                                       0xFF666666), // Change color to 666666
+                                  fontFamily: 'Montserrat', // Apply Montserrat font
                                 ),
                               ),
                               SizedBox(height: 5), // Reduce space above button
@@ -171,6 +175,7 @@ class _ProfileState extends State<Profile> {
                                     style: TextStyle(
                                       color: Colors
                                           .white, // Change font color to white
+                                      fontFamily: 'Montserrat', // Apply Montserrat font
                                     ),
                                   ),
                                   style: ElevatedButton.styleFrom(
@@ -200,6 +205,7 @@ class _ProfileState extends State<Profile> {
                       fontSize: 22, // Change font size to 22
                       fontWeight: FontWeight.bold,
                       color: Colors.black, // Change color to black
+                      fontFamily: 'Montserrat', // Apply Montserrat font
                     ),
                   ),
                 ),
@@ -224,7 +230,10 @@ class _ProfileState extends State<Profile> {
                         leading:
                             Icon(Icons.vibration, color: Color(0xFF0064D1)),
                         title: Text('Fitur getar',
-                            style: TextStyle(color: Color(0xFF666666))),
+                            style: TextStyle(
+                              color: Color(0xFF666666),
+                              fontFamily: 'Montserrat', // Apply Montserrat font
+                            )),
                         trailing: Switch(
                           value: _isVibrationEnabled,
                           onChanged: (value) {
@@ -248,7 +257,10 @@ class _ProfileState extends State<Profile> {
                         leading:
                             Icon(Icons.accessibility, color: Color(0xFF0064D1)),
                         title: Text('Fitur talkback',
-                            style: TextStyle(color: Color(0xFF666666))),
+                            style: TextStyle(
+                              color: Color(0xFF666666),
+                              fontFamily: 'Montserrat', // Apply Montserrat font
+                            )),
                         trailing: Switch(
                           value: _isTalkbackEnabled,
                           onChanged: (value) {
@@ -271,11 +283,14 @@ class _ProfileState extends State<Profile> {
                       ListTile(
                         leading: Icon(Icons.history, color: Color(0xFF0064D1)),
                         title: Text('Riwayat Perjalanan',
-                            style: TextStyle(color: Color(0xFF666666))),
+                            style: TextStyle(
+                              color: Color(0xFF666666),
+                              fontFamily: 'Montserrat', // Apply Montserrat font
+                            )),
                         trailing: Icon(Icons.arrow_forward_ios,
                             color: Color(0xFF0064D1)),
                         onTap: () {
-                          // Handle navigation to history
+                          context.push('/riwayat');
                         },
                       ),
                       Divider(), // Add additional line under Riwayat Perjalanan
@@ -292,7 +307,10 @@ class _ProfileState extends State<Profile> {
                           );
                         },
                         child: Text('Keluar',
-                            style: TextStyle(color: Color(0xFF0064D1))),
+                            style: TextStyle(
+                              color: Color(0xFF0064D1),
+                              fontFamily: 'Montserrat', // Apply Montserrat font
+                            )),
                         style: ElevatedButton.styleFrom(
                           side: BorderSide(
                               color: Color(0xFF0064D1)), // Add border color

@@ -40,6 +40,7 @@ class _BerandaScreenState extends State<BerandaScreen> {
                     Text(
                       'Halo, $displayName 👋',
                       style: AppTextStyles.bodyText.copyWith(
+                        fontFamily: 'Montserrat',
                         color: Colors.white,
                       ),
                     ),
@@ -47,6 +48,7 @@ class _BerandaScreenState extends State<BerandaScreen> {
                     Text(
                       'Yuk, mulai dampingi perjalanan hari ini!',
                       style: AppTextStyles.heading1.copyWith(
+                        fontFamily: 'Montserrat',
                         color: Colors.white,
                       ),
                     ),

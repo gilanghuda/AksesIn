@@ -33,15 +33,17 @@ class BottomPlaceInfo extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat',
                 ),
               ),
               SizedBox(height: 10),
-              Text('${placeDistance ?? '0.0'} km'), 
+              Text('${placeDistance ?? '0.0'} km', style: TextStyle(fontFamily: 'Montserrat')),
               Text(
                 'Ringkasan ulasan',
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat',
                 ),
               ),
               SizedBox(height: 10),
@@ -51,25 +53,25 @@ class BottomPlaceInfo extends StatelessWidget {
                   Column(
                     children: <Widget>[
                       Icon(Icons.sentiment_very_satisfied, color: Colors.green),
-                      Text('Sangat Baik'),
+                      Text('Sangat Baik', style: TextStyle(fontFamily: 'Montserrat')),
                     ],
                   ),
                   Column(
                     children: <Widget>[
                       Icon(Icons.sentiment_satisfied, color: Colors.lightGreen),
-                      Text('Baik'),
+                      Text('Baik', style: TextStyle(fontFamily: 'Montserrat')),
                     ],
                   ),
                   Column(
                     children: <Widget>[
                       Icon(Icons.sentiment_neutral, color: Colors.amber),
-                      Text('Buruk'),
+                      Text('Buruk', style: TextStyle(fontFamily: 'Montserrat')),
                     ],
                   ),
                   Column(
                     children: <Widget>[
                       Icon(Icons.sentiment_very_dissatisfied, color: Colors.red),
-                      Text('Sangat Buruk'),
+                      Text('Sangat Buruk', style: TextStyle(fontFamily: 'Montserrat')),
                     ],
                   ),
                 ],
@@ -85,7 +87,7 @@ class BottomPlaceInfo extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'Ahmad Kiran\nPetunjuk arah yang diberikan sangat jelas dan akurat. Sebagai pengguna kursi roda saya merasa perjalanan jauh lebih mudah dan aman.',
-                      style: TextStyle(fontSize: 14.0),
+                      style: TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
                     ),
                   ),
                 ],
@@ -101,7 +103,7 @@ class BottomPlaceInfo extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'Viviane Angeli\nSebagai tunanetra, saya sangat terbantu. Rute yang direkomendasikan juga mempertimbangkan jalur yang aman dan mudah dilalui. Keren!',
-                      style: TextStyle(fontSize: 14.0),
+                      style: TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
                     ),
                   ),
                 ],
@@ -166,10 +168,11 @@ class BottomPlaceInfo extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
                     ),
                   ),
                   SizedBox(height: 10),
-                  Text('${placeDistance ?? '0.0'} km'), 
+                  Text('${placeDistance ?? '0.0'} km', style: TextStyle(fontFamily: 'Montserrat')),
                   SizedBox(height: 20),
                   CustomButton(
                     text: 'Mulai Perjalanan',

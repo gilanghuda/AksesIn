@@ -50,11 +50,24 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifications', style: TextStyle(color: Colors.white)),
+        title: Text(
+          'Notifications',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Montserrat',
+          ),
+        ),
         backgroundColor: AppColors.primaryColor,
       ),
       body: userId == null
-          ? Center(child: Text('No user logged in'))
+          ? Center(
+              child: Text(
+                'No user logged in',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                ),
+              ),
+            )
           : Consumer<NotificationProvider>(
               builder: (context, provider, child) {
                 if (provider.isLoading) {
@@ -65,7 +78,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   print("apa ini");
                   print(provider.notifications);
                   print(provider);
-                  return Center(child: Text('No notifications available'));
+                  return Center(
+                    child: Text(
+                      'No notifications available',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                      ),
+                    ),
+                  );
                 }
 
                 return ListView.builder(
@@ -76,8 +96,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       children: [
                         ListTile(
                           leading: Icon(Icons.person), 
-                          title: Text(notification.body),
-                          trailing: Text(getTimeInfo(notification.createdAt)),
+                          title: Text(
+                            notification.body,
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
+                          trailing: Text(
+                            getTimeInfo(notification.createdAt),
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
                         ),
                         Divider(), 
                       ],

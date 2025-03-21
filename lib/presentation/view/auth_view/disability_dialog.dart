@@ -14,7 +14,12 @@ class _DisabilityDialogState extends State<DisabilityDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Pilih Kebutuhanmu'),
+      title: Text(
+        'Pilih Kebutuhanmu',
+        style: TextStyle(
+          fontFamily: 'Montserrat',
+        ),
+      ),
       content: SingleChildScrollView(
         child: ButtonDisabilitySection(
           onSelectedOptionsChanged: (selectedOptions) {
@@ -29,7 +34,12 @@ class _DisabilityDialogState extends State<DisabilityDialog> {
           onPressed: () {
             Navigator.of(context).pop(_selectedOptions);
           },
-          child: Text('OK'),
+          child: Text(
+            'OK',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+            ),
+          ),
         ),
       ],
     );

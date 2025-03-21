@@ -24,6 +24,7 @@ class AksesTemanScreen extends StatelessWidget {
             Text(
               'AksesTeman',
               style: TextStyle(
+                fontFamily: 'Montserrat',
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -33,6 +34,7 @@ class AksesTemanScreen extends StatelessWidget {
               'Masukkan kode AksesTeman untuk mulai mendampingi!',
               textAlign: TextAlign.center,
               style: TextStyle(
+                fontFamily: 'Montserrat',
                 fontSize: 16,
               ),
             ),
@@ -49,7 +51,10 @@ class AksesTemanScreen extends StatelessWidget {
                   border: InputBorder.none,
                 ),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 24),
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 24,
+                ),
                 keyboardType: TextInputType.text, 
               ),
             ),

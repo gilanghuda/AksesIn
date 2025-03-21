@@ -1,6 +1,7 @@
 import 'package:aksesin/presentation/view/OTP.dart';
 import 'package:aksesin/presentation/view/Profile1.dart';
 import 'package:aksesin/presentation/view/Resetpass.dart';
+import 'package:aksesin/presentation/view/Riwayat.dart';
 import 'package:aksesin/presentation/view/akses_jalan_detail/map_navigation.dart';
 import 'package:aksesin/presentation/view/auth1.dart';
 import 'package:aksesin/presentation/view/auth_view/dissability_screen.dart';
@@ -182,6 +183,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/notifikasi',
       builder: (context, state) => const NotificationScreen(),
+    ),
+    GoRoute(
+      path: '/riwayat',
+      builder: (context, state) => const Riwayat(),
     ),
   ],
 );
