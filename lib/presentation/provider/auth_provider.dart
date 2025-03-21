@@ -76,9 +76,9 @@ class AuthProvider with ChangeNotifier {
     _setLoading(true);
     _clearError();
     try {
-      await authService.signOut();
+      await authService.signOut(context);
       if (context.mounted) {
-        context.go('/');
+        context.go('/login');
       }
     } catch (e) {
       _setError(e.toString());
@@ -89,6 +89,19 @@ class AuthProvider with ChangeNotifier {
 
   Future<UserModel> getCurrentUserProfile() async {
     return await authService.getCurrentUserProfile();
+  }
+
+  Future<void> updateProfile(String username, String email, String? photoUrl) async {
+    _setLoading(true);
+    _clearError();
+    try {
+      await authService.updateProfile(username, email, photoUrl);
+      notifyListeners();
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
   }
 
   void _setLoading(bool value) {

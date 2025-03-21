@@ -1,12 +1,14 @@
+import 'package:aksesin/presentation/view/Profile.dart';
 import 'package:aksesin/presentation/view/komunitas/komunitas_screen.dart';
 import 'package:aksesin/presentation/view/home_page/akses_jalan.dart';
-import 'package:aksesin/presentation/view/home_page/profile.dart';
+import 'package:aksesin/presentation/view/pendamping_page/beranda.dart';
 import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:flutter/material.dart';
 
-
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final bool isPendamping;
+
+  const HomeScreen({super.key, required this.isPendamping});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -27,27 +29,27 @@ class _HomeScreenState extends State<HomeScreen> {
       body: IndexedStack(
         index: _selectedIndex,
         children: [
-          AksesJalanScreen(),
+          widget.isPendamping ? BerandaScreen() : AksesJalanScreen(),
           KomunitasScreen(),
-          ProfileScreen(),
+          Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: true,
         showUnselectedLabels: false, 
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColors.secondaryColor,
+        selectedItemColor: AppColors.primaryColor,
         unselectedItemColor: Colors.blueGrey,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'AksesJalan',
+            icon: widget.isPendamping ? Icon(Icons.home) : Icon(Icons.explore),
+            label: widget.isPendamping ? 'Beranda' : 'AksesJalan',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.message),
             label: 'Komunitas',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),

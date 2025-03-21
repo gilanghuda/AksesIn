@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Resetpass extends StatefulWidget {
   const Resetpass({super.key});
@@ -210,7 +211,7 @@ class _Resetpass extends State<Resetpass> {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle password reset logic here
+                  context.go('/login');
                 },
                 child: Text('Reset Password',
                     style: TextStyle(color: Colors.white)),

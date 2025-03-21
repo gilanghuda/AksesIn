@@ -1,9 +1,12 @@
 import 'package:aksesin/data/models/user_model.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
+import 'package:aksesin/presentation/provider/notification_provider.dart';
+import 'package:aksesin/presentation/widget/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'search_post_section.dart';
 import '../../provider/komunitas_provider.dart';
 
@@ -15,7 +18,7 @@ class KomunitasScreen extends StatefulWidget {
 }
 
 class _KomunitasScreenState extends State<KomunitasScreen> {
-  String _selectedCategory = 'All';
+  List<String> _selectedCategories = ['All'];
 
   @override
   void initState() {
@@ -24,9 +27,9 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
     });
   }
 
-  void _updateCategory(String category) {
+  void _updateCategory(String categories) {
     setState(() {
-      _selectedCategory = category;
+      _selectedCategories = categories.split(', ');
     });
   }
 
@@ -48,18 +51,18 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
           ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: _selectedCategory == 'All'
+              stream: _selectedCategories.contains('All')
                   ? FirebaseFirestore.instance.collection('komunitas').snapshots()
                   : FirebaseFirestore.instance
                       .collection('komunitas')
-                      .where('category', isEqualTo: _selectedCategory)
+                      .where('category', whereIn: _selectedCategories)
                       .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 }
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Center(child: Text('No posts available'));
+                  return Center(child: Text('No posts available', style: TextStyle(fontFamily: 'Montserrat')));
                 }
                 final komunitasList = snapshot.data!.docs;
                 return ListView.builder(
@@ -67,10 +70,11 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
                   itemCount: komunitasList.length,
                   itemBuilder: (context, index) {
                     final komunitas = komunitasList[index];
+                    final createdAt = DateFormat('dd MMM yyyy, HH:mm').format(komunitas['createdAt'].toDate());
                     return _buildPost(
                       context,
                       komunitas['username'],
-                      komunitas['createdAt'].toDate().toString(),
+                      createdAt,
                       komunitas['content'],
                       komunitas['likesCount'],
                       komunitas['commentsCount'],
@@ -87,10 +91,12 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
+        backgroundColor: AppColors.primaryColor,
         onPressed: () {
           context.push('/post-komunitas');
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -104,9 +110,9 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(child: Text('Error: ${snapshot.error}', style: TextStyle(fontFamily: 'Montserrat')));
         } else if (!snapshot.hasData) {
-          return Center(child: Text('No user data found.'));
+          return Center(child: Text('No user data found.', style: TextStyle(fontFamily: 'Montserrat')));
         } else {
           UserModel currentUser = snapshot.data!;
 
@@ -120,27 +126,27 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundImage: NetworkImage(profilePicture),
+                        backgroundImage: NetworkImage(profilePicture.isNotEmpty ? profilePicture : 'assets/default_avatar.png'),
                       ),
                       const SizedBox(width: 8.0),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(author, style: const TextStyle(fontWeight: FontWeight.bold)),
-                          Text(date, style: const TextStyle(color: Colors.grey)),
+                          Text(author, style: const TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Montserrat')),
+                          Text(date, style: const TextStyle(color: Colors.grey, fontFamily: 'Montserrat')),
                         ],
                       ),
                     ],
                   ),
                   const SizedBox(height: 8.0),
-                  Text(content),
+                  Text(content, style: TextStyle(fontFamily: 'Montserrat')),
                   if (images != null && images.isNotEmpty) ...[
                     const SizedBox(height: 8.0),
                     Column(
                       children: images.map((image) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Image.network(image, errorBuilder: (context, error, stackTrace) {
-                          return Text('Could not load image');
+                          return Text('Could not load image', style: TextStyle(fontFamily: 'Montserrat'));
                         }),
                       )).toList(),
                     ),
@@ -157,12 +163,14 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
                               color: likedBy.contains(currentUser.id) ? Colors.blue : null,
                             ),
                             onPressed: () {
-                              if (!likedBy.contains(currentUser.id)) {
+                              if (likedBy.contains(currentUser.id)) {
+                                _updateLikes(komunitasId, likes - 1, currentUser.id, unlike: true);
+                              } else {
                                 _updateLikes(komunitasId, likes + 1, currentUser.id);
                               }
                             },
                           ),
-                          Text('$likes'),
+                          Text('$likes', style: TextStyle(fontFamily: 'Montserrat')),
                         ],
                       ),
                       Row(
@@ -173,7 +181,7 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
                               _showCommentsDialog(context, komunitasId, currentUser.id);
                             },
                           ),
-                          Text('$comments'),
+                          Text('$comments', style: TextStyle(fontFamily: 'Montserrat')),
                         ],
                       ),
                     ],
@@ -187,9 +195,25 @@ class _KomunitasScreenState extends State<KomunitasScreen> {
     );
   }
 
-  void _updateLikes(String komunitasId, int newLikesCount, String userId) async {
-    await Provider.of<KomunitasProvider>(context, listen: false).updateLikes(komunitasId, newLikesCount, userId);
-    setState(() {}); 
+  void _updateLikes(String komunitasId, int newLikesCount, String userId, {bool unlike = false}) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final userProfile = await authProvider.getCurrentUserProfile();
+    final userName = userProfile.username;
+    final komunitasDoc = await FirebaseFirestore.instance.collection('komunitas').doc(komunitasId).get();
+    final content = komunitasDoc['content'];
+
+    if (unlike) {
+      await Provider.of<KomunitasProvider>(context, listen: false).unlikeKomunitas(komunitasId, newLikesCount, userId);
+    } else {
+      await Provider.of<KomunitasProvider>(context, listen: false).updateLikes(komunitasId, newLikesCount, userId);
+      await Provider.of<NotificationProvider>(context, listen: false).addNotification(
+        komunitasDoc['userId'],
+        userName,
+        'menyukai postingan Anda',
+        content
+      );
+    }
+    setState(() {});
   }
 
   void _showCommentsDialog(BuildContext context, String komunitasId, String userId) {

@@ -38,6 +38,7 @@ class _DissabilityScreenState extends State<DissabilityScreen> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Montserrat',
               ),
               textAlign: TextAlign.center,
             ),

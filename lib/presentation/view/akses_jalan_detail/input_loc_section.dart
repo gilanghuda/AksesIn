@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class InputLocSection extends StatelessWidget {
   const InputLocSection({super.key});
@@ -18,11 +19,11 @@ class InputLocSection extends StatelessWidget {
               children: [
                 Text(
                   'Lokasi',
-                  style: TextStyle(color: Colors.white, fontSize: 14),
+                  style: TextStyle(color: Colors.white, fontSize: 14, fontFamily: 'Montserrat'),
                 ),
                 Text(
                   'Universitas Brawijaya',
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
                 ),
               ],
             ),
@@ -42,12 +43,15 @@ class InputLocSection extends StatelessWidget {
             ],
           ),
           child: TextField(
+            onSubmitted: (value) {
+              context.push('/map', extra: {'destinationAddress': value, 'isSosReceived': false});
+            },
             decoration: InputDecoration(
               hintText: 'Cari Lokasi',
               prefixIcon: IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.pop(context);
+                  context.pop();
                 },
               ),
               suffixIcon: Icon(Icons.mic),
@@ -67,8 +71,8 @@ class InputLocSection extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Rumah', style: TextStyle(color: Colors.white)),
-                    Text('Jl. Sigura-Gura', style: TextStyle(fontSize: 12, color: Colors.white70)),
+                    Text('Rumah', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat')),
+                    Text('Jl. Sigura-Gura', style: TextStyle(fontSize: 12, color: Colors.white70, fontFamily: 'Montserrat')),
                   ],
                 ),
               ],
@@ -80,8 +84,8 @@ class InputLocSection extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Kantor', style: TextStyle(color: Colors.white)),
-                    Text('Atur lokasi', style: TextStyle(fontSize: 12, color: Colors.white70)),
+                    Text('Kantor', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat')),
+                    Text('Atur lokasi', style: TextStyle(fontSize: 12, color: Colors.white70, fontFamily: 'Montserrat')),
                   ],
                 ),
               ],
@@ -93,7 +97,7 @@ class InputLocSection extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Lainnya', style: TextStyle(color: Colors.white)),
+                    Text('Lainnya', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat')),
                   ],
                 ),
               ],

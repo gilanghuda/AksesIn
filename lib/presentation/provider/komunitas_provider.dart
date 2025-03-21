@@ -49,6 +49,16 @@ class KomunitasProvider with ChangeNotifier {
     }
   }
 
+  Future<void> unlikeKomunitas(String komunitasId, int newLikesCount, String userId) async {
+    await updateKomunitas.unlikekomunitas(komunitasId, newLikesCount, userId);
+    final index = _komunitasList.indexWhere((komunitas) => komunitas.id == komunitasId);
+    if (index != -1) {
+      final updatedLikedBy = List<String>.from(_komunitasList[index].likedBy)..remove(userId);
+      _komunitasList[index] = _komunitasList[index].copyWith(likesCount: newLikesCount, likedBy: updatedLikedBy);
+      notifyListeners();
+    }
+  }
+
   Future<void> addComment(String komunitasId, String comment) async {
     await updateKomunitas.addComment(komunitasId, comment);
     final index = _komunitasList.indexWhere((komunitas) => komunitas.id == komunitasId);

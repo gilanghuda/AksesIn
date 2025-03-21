@@ -10,23 +10,27 @@ class AppColors {
 
 class AppTextStyles {
   static const TextStyle heading1 = TextStyle(
+    fontFamily: 'Montserrat',
     fontSize: 22,
     fontWeight: FontWeight.bold,
     color: AppColors.textColor,
   );
 
   static const TextStyle heading2 = TextStyle(
+    fontFamily: 'Montserrat',
     fontSize: 20,
     fontWeight: FontWeight.bold,
     color: AppColors.textColor,
   );
 
   static const TextStyle bodyText = TextStyle(
+    fontFamily: 'Montserrat',
     fontSize: 16,
     color: AppColors.textColor,
   );
 
   static const TextStyle hintText = TextStyle(
+    fontFamily: 'Montserrat',
     fontSize: 14,
     color: AppColors.hintTextColor,
     fontStyle: FontStyle.italic,

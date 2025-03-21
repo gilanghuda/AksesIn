@@ -1,4 +1,8 @@
+import 'package:aksesin/presentation/provider/auth_provider.dart';
+import 'package:aksesin/presentation/view/logout_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -9,10 +13,27 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
+  String _profilePictureUrl = ''; // Default profile picture
   double _editButtonWidth = 250.0; // Default width for the edit button
   bool _isVibrationEnabled = false; // State for Fitur getar switch
   bool _isTalkbackEnabled = true; // State for Fitur talkback switch
   int currentIndex = 2; // Define currentIndex variable
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      final userProfile = await authProvider.getCurrentUserProfile();
+      setState(() {
+        _nameController.text = userProfile.username;
+        _emailController.text = userProfile.email;
+        _categoryController.text = userProfile.disabilityOptions.join(', ');
+        _profilePictureUrl = userProfile.photoUrl ?? ''; // Handle nullable photoUrl
+      });
+    });
+  }
 
   @override
   void dispose() {
@@ -52,6 +73,7 @@ class _ProfileState extends State<Profile> {
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.white, // Change color to black
+                      fontFamily: 'Montserrat', // Apply Montserrat font
                     ),
                   ),
                 ),
@@ -80,8 +102,16 @@ class _ProfileState extends State<Profile> {
                             top: 10), // Adjust top padding
                         child: CircleAvatar(
                           radius: 30, // Reduce profile picture size
-                          backgroundImage:
-                              AssetImage('assets/profile_picture.png'),
+                          backgroundImage: _profilePictureUrl.isNotEmpty 
+                              ? NetworkImage(_profilePictureUrl) 
+                              : null,
+                          child: _profilePictureUrl.isEmpty 
+                              ? Icon(
+                                  Icons.account_circle,
+                                  size: 60,
+                                  color: Colors.grey,
+                                )
+                              : null,
                         ),
                       ),
                       SizedBox(
@@ -97,10 +127,11 @@ class _ProfileState extends State<Profile> {
                                 MainAxisAlignment.center, // Center align text
                             children: <Widget>[
                               Text(
-                                'Ahmad',
+                                _nameController.text,
                                 style: TextStyle(
                                   fontSize: 18, // Reduce font size
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat', // Apply Montserrat font
                                 ),
                               ),
                               Row(
@@ -113,21 +144,23 @@ class _ProfileState extends State<Profile> {
                                       width:
                                           5), // Add space between icon and text
                                   Text(
-                                    'Tuna Netra',
+                                    _categoryController.text,
                                     style: TextStyle(
                                       fontSize: 14, // Reduce font size
                                       color: Color(
                                           0xFF666666), // Change color to 666666
+                                      fontFamily: 'Montserrat', // Apply Montserrat font
                                     ),
                                   ),
                                 ],
                               ),
                               Text(
-                                'ahmadburhan@gmail.com',
+                                _emailController.text,
                                 style: TextStyle(
                                   fontSize: 14, // Reduce font size
                                   color: Color(
                                       0xFF666666), // Change color to 666666
+                                  fontFamily: 'Montserrat', // Apply Montserrat font
                                 ),
                               ),
                               SizedBox(height: 5), // Reduce space above button
@@ -135,13 +168,14 @@ class _ProfileState extends State<Profile> {
                                 width: _editButtonWidth,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    // Handle edit profile
+                                    context.push('/edit-profile');
                                   },
                                   child: Text(
                                     'Edit Profil',
                                     style: TextStyle(
                                       color: Colors
                                           .white, // Change font color to white
+                                      fontFamily: 'Montserrat', // Apply Montserrat font
                                     ),
                                   ),
                                   style: ElevatedButton.styleFrom(
@@ -171,6 +205,7 @@ class _ProfileState extends State<Profile> {
                       fontSize: 22, // Change font size to 22
                       fontWeight: FontWeight.bold,
                       color: Colors.black, // Change color to black
+                      fontFamily: 'Montserrat', // Apply Montserrat font
                     ),
                   ),
                 ),
@@ -195,7 +230,10 @@ class _ProfileState extends State<Profile> {
                         leading:
                             Icon(Icons.vibration, color: Color(0xFF0064D1)),
                         title: Text('Fitur getar',
-                            style: TextStyle(color: Color(0xFF666666))),
+                            style: TextStyle(
+                              color: Color(0xFF666666),
+                              fontFamily: 'Montserrat', // Apply Montserrat font
+                            )),
                         trailing: Switch(
                           value: _isVibrationEnabled,
                           onChanged: (value) {
@@ -219,7 +257,10 @@ class _ProfileState extends State<Profile> {
                         leading:
                             Icon(Icons.accessibility, color: Color(0xFF0064D1)),
                         title: Text('Fitur talkback',
-                            style: TextStyle(color: Color(0xFF666666))),
+                            style: TextStyle(
+                              color: Color(0xFF666666),
+                              fontFamily: 'Montserrat', // Apply Montserrat font
+                            )),
                         trailing: Switch(
                           value: _isTalkbackEnabled,
                           onChanged: (value) {
@@ -242,11 +283,14 @@ class _ProfileState extends State<Profile> {
                       ListTile(
                         leading: Icon(Icons.history, color: Color(0xFF0064D1)),
                         title: Text('Riwayat Perjalanan',
-                            style: TextStyle(color: Color(0xFF666666))),
+                            style: TextStyle(
+                              color: Color(0xFF666666),
+                              fontFamily: 'Montserrat', // Apply Montserrat font
+                            )),
                         trailing: Icon(Icons.arrow_forward_ios,
                             color: Color(0xFF0064D1)),
                         onTap: () {
-                          // Handle navigation to history
+                          context.push('/riwayat');
                         },
                       ),
                       Divider(), // Add additional line under Riwayat Perjalanan
@@ -255,10 +299,18 @@ class _ProfileState extends State<Profile> {
                               90), // Add more whitespace between "Keluar" button and Riwayat Perjalanan
                       ElevatedButton(
                         onPressed: () {
-                          // Handle logout
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return LogoutDialog();
+                            },
+                          );
                         },
                         child: Text('Keluar',
-                            style: TextStyle(color: Color(0xFF0064D1))),
+                            style: TextStyle(
+                              color: Color(0xFF0064D1),
+                              fontFamily: 'Montserrat', // Apply Montserrat font
+                            )),
                         style: ElevatedButton.styleFrom(
                           side: BorderSide(
                               color: Color(0xFF0064D1)), // Add border color
@@ -277,54 +329,6 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Color(0xFFFFFAFA), // Change background color to FFFAFA
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, -3), // Shadow above the footer
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Color(0xFFFFFAFA),
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.explore, size: 30), // Increase icon size
-              label: 'AksesJalan',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat, size: 30), // Increase icon size
-              label: 'AksesKomun',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 30), // Increase icon size
-              label: 'Profil',
-            ),
-          ],
-          currentIndex: currentIndex,
-          selectedItemColor:
-              Color(0xFF0064D1), // Change selected item color to 0064D1
-          unselectedItemColor: Colors.grey,
-          onTap: (index) {
-            setState(() {
-              // Update the current index to change the selected item
-              currentIndex = index;
-            });
-          },
-          selectedLabelStyle: TextStyle(
-            color: Color(0xFF0064D1),
-            fontSize: 16, // Increase label font size
-          ),
-          unselectedLabelStyle: TextStyle(
-            color: Colors.grey,
-            fontSize: 14, // Increase label font size
-          ),
-        ),
       ),
     );
   }

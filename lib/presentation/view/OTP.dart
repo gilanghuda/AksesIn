@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Add this import
 import 'dart:async'; // Add this import
-import 'package:flutter/gestures.dart'; // Add this import
+import 'package:flutter/gestures.dart';
+import 'package:go_router/go_router.dart'; // Add this import
 
 class OTP extends StatefulWidget {
   const OTP({super.key});
@@ -261,7 +262,7 @@ class _OTPState extends State<OTP> {
                   child: ElevatedButton(
                     onPressed: _areAllBoxesFilled()
                         ? () {
-                            // Handle verification logic here
+                            context.go('/resetpass'); 
                           }
                         : null,
                     child: Text('Verifikasi',

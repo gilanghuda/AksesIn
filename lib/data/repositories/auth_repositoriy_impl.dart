@@ -30,4 +30,9 @@ class AuthRepositoryImpl implements AuthRepository {
       photoUrl: user.photoUrl,
     );
   }
+
+  @override
+  Future<void> updateProfile(String username, String email, String? photoUrl) async {
+    await firebaseAuthService.updateProfile(username, email, photoUrl);
+  }
 }

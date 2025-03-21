@@ -1,8 +1,8 @@
+import 'package:aksesin/domain/usecases/get_notification.dart';
+import 'package:aksesin/domain/usecases/track_user.dart';
 import 'package:aksesin/presentation/provider/auth_provider.dart';
-import 'package:aksesin/presentation/view/OTP.dart';
-import 'package:aksesin/presentation/view/Profile.dart';
-import 'package:aksesin/presentation/view/Profile1.dart';
-import 'package:aksesin/presentation/view/Resetpass.dart';
+import 'package:aksesin/presentation/provider/maps_provider.dart';
+import 'package:aksesin/presentation/provider/notification_provider.dart';
 import 'package:aksesin/presentation/view/app_route/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -55,7 +55,18 @@ class MyApp extends StatelessWidget {
             addKomunitas: di.sl(),
             updateKomunitas: di.sl(),
             getComments: di.sl(),
-),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.sl<MapsProvider>(),
+        ),
+        Provider<TrackUserById>(
+          create: (_) => di.sl<TrackUserById>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => NotificationProvider(
+            getNotification: di.sl<GetNotification>(),
+          ),
         ),
       ],
       child: MaterialApp.router(
